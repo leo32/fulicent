@@ -69,6 +69,16 @@
             <scope>runtime</scope>
         </dependency>
         
+        <!-- MySQL and Connection pool-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-driver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
       <!-- Java Bean -->
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -1,2 +1,6 @@
 fulicentUI/dist/
 fulicentUI/node_modules/
+/release/Dockerfile
+/release/start.sh
+/release
+/fulicentApi/src/main/resources

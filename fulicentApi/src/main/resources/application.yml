@@ -10,8 +10,24 @@ logging:
 spring:
   profiles: stg
   datasource:
-   driver-class-name: org.h2.Driver
-   url: jdbc:h2:~/test
-   username: sa
-   password: Cwgleo2019
-   
+   driver-class-name: com.mysql.cj.jdbc.Driver
+   url: jdbc:mysql://localhost:3219/fulicent?autoReconnect=true&useUnicode=true&serverTimezone=GMT%2B8&characterEncoding=utf-8&allowMultiQueries=true
+   username: cwg
+   password: Cwgleo32
+
+spring:
+  profiles:
+    active: prod
+
+---
+logging:
+  level:
+    com: DEBUG
+
+spring:
+  profiles: prod
+  datasource:
+   driver-class-name: com.mysql.cj.jdbc.Driver
+   url: jdbc:mysql://18.191.82.32:3219/fulicent?autoReconnect=true&useUnicode=true&serverTimezone=GMT%2B8&characterEncoding=utf-8&allowMultiQueries=true
+   username: cwg
+   password: Cwgleo32  

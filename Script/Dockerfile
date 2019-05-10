@@ -12,6 +12,6 @@ WORKDIR /tmp/
 
 RUN apt-get update -y && apt-get install -y curl python && curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py && pip install awscli
 
-ENTRYPOINT [ "sh", "-c", "java  -Djava.security.egd=file:/dev/./urandom -jar /fulicent.jar" ]
+ENTRYPOINT [ "sh", "-c", "java -XshowSettings:vm -Dspring.profiles.active=prod -Djava.security.egd=file:/dev/./urandom -jar /fulicent.jar" ]
 
 #ENTRYPOINT ["/tmp/", "start.sh"]

@@ -15,15 +15,7 @@ spring:
    username: cwg
    password: Cwgleo32
 
-spring:
-  profiles:
-    active: prod
-
 ---
-logging:
-  level:
-    com: DEBUG
-
 spring:
   profiles: prod
   datasource:

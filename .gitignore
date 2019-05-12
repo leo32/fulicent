@@ -4,3 +4,6 @@ fulicentUI/node_modules/
 /release/start.sh
 /release
 /fulicentApi/src/main/resources
+/fulicentUI/dist
+dist
+wx

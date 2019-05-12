@@ -1,6 +1,6 @@
 {
-  "mode": "hash",
-  "domain": "http://localhost",
+  "mode": "false",
+  "domain": "https://cmljs.org",
   "routes":[
     {
       "url": "/index",

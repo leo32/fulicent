@@ -102,11 +102,4 @@ public class ValidatorAOP {
             throw new ApiException(CHECKNAME_DUPLICATE);
     }
 */
-    private String splitCamel(String raw) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < raw.length(); i++) {
-
-        }
-        return "";
-    }
 }

@@ -11,7 +11,7 @@ public interface ProductsDao {
 	            "SELECT " +
 	            " * " +
 	            "FROM " +
-	            " Products t " +
+	            " fulicent.products t " +
 	            "WHERE " +
 	            " t.Status=1 " +
 	            "<if test='sort == \"Name\"'>  " +

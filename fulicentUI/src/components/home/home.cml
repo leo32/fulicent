@@ -1,0 +1,71 @@
+<template>
+  <view class="wrapper-classify">
+    <search></search>
+    <view class="wrapper-content">
+      <view class="class-list" style="{{scrollerHeight}}cpx">
+        <scroller height="{{scrollerHeight}}">
+          <view class="class-wrapper">
+            <text class="class-txt" c-for="{{classes}}">{{item}}</text>
+          </view>
+        </scroller>
+      </view>
+
+      <view class="main-list" style="{{scrollerHeight}}cpx">
+        <image class="ad-img" resize="cover" src="https://cmljs.org/cml-demo/src/assets/images/yanxuan/3ebd7addcc0d101d116052a57cec2f16.png"></image>
+        <text class="sub-tlt"> --- 推荐区分类 --- </text>
+        <view class="sub-box">
+          <view class="sub-i" c-for="{{subclasses}}" c-bind:tap="godetail">
+            <image class="i-img" resize="contain" src="{{item.img}}"></image>
+            <text class="i-name">{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</template>
+<script>
+  import cml from "chameleon-api";
+  const headerHeight = 114;
+  const tabbarHeight = 90;
+  class Home   {
+    data = {
+      classes: [],
+      subclasses : [],
+      scrollerHeight: -1
+    }
+    methods = {
+      godetail(){
+        cml.navigateTo({
+          "path": "/pages/detail/detail"
+        });
+      },
+      forbinding(e){
+        // e.stopPropagation();
+      }
+    }
+/*
+    created() {
+      let result = yanxuanData.data.result;
+      this.classes = result.classes;
+      this.subclasses = result.subclasses;
+    }
+*/
+    mounted() {
+      cml.getSystemInfo().then((info)=>{
+        this.scrollerHeight = Number(info.viewportHeight) - headerHeight - tabbarHeight
+      })
+    }
+  }
+
+  export default new Home();
+</script>
+<script cml-type="json">
+  {
+    "base": {
+      "usingComponents": {
+        "search": "../common/search"
+      }
+    }
+  }
+</script>

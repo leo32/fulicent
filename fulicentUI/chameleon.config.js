@@ -5,7 +5,7 @@ const publicPath = './';
 const apiPrefix = 'https://api.chameleon.com';
 
 cml.config.merge({
-  templateLang: "vue",
+  templateLang: "cml",
   templateType: "html",
   platforms: ["web"],
   projectName:"index",
@@ -21,33 +21,15 @@ cml.config.merge({
     web: true,
     weex: false
   },
-  wx: {
-    dev: {
-    },
-    build: {
-      apiPrefix
-    }
-  },
   web: {
     dev: {
       analysis: false,
       console: false
     },
     build: {
+	  hash:false,
       analysis: false,
       publicPath: `${publicPath}`,
-      apiPrefix
-    }
-  },
-  weex: {
-    dev: {
-    },
-    build: {
-      publicPath: `${publicPath}/weex/`,
-      apiPrefix
-    },
-    custom: {
-      publicPath: `${publicPath}/wx/`,
       apiPrefix
     }
   }

@@ -1,5 +1,6 @@
 <template>
   <page title="chameleon">
+  <view  class="fulicentPage">
     <view class="chameleon-content" style="height:{{scrollHeight}}cpx;">
       <scroller
         scroll-direction="vertical"
@@ -12,6 +13,7 @@
     <view class="footer-zhanwei">
       <c-tabbar c-model="{{currentCom}}"
                 tabbar="{{tabbar}}"></c-tabbar>
+    </view>
     </view>
     </view>
   </page>
@@ -102,6 +104,12 @@ export default new Index();
 
 </script>
 <style scoped>
+@media cml-type (web) {
+  .fulicentPage{
+     margin:0 auto;
+     text-align: center;
+     font-size:12px;
+  }
   .chameleon-content {
     width: 750cpx;
     overflow-x: hidden;
@@ -141,8 +149,9 @@ export default new Index();
     right: 0;
     background: #fff;
     border-top: 2cpx solid #E6E6E6;
+    
   }
-
+}
 </style>
 <script cml-type="json">
   {

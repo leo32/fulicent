@@ -13,8 +13,6 @@ import com.fulicent.common.entity.MessageInfo;
 
 import javax.inject.Inject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 @RestController
 @RequestMapping("/products")

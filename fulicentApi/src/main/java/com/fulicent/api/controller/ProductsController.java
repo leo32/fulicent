@@ -27,7 +27,7 @@ public class ProductsController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponseBody> products(@RequestParam(name = "limit", defaultValue = "100") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,
-            @RequestParam(value = "sort", required = false, defaultValue = "updated") String sort,
+            @RequestParam(value = "sort", required = false, defaultValue = "CreateTime") String sort,
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order){
 		List<Products> products=productsService.Products(limit, skip, sort, order);
 		return new ResponseEntity<>(ApiResponseBody.builder()

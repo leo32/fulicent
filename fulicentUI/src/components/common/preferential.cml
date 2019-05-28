@@ -1,0 +1,61 @@
+<template>
+    <view class="lq">
+    <a href="/index/click/index/id/587945436412/coupon_id/cca532d9cad24973b7fee9bafec4d738.html" target="_blank" rel="nofollow">
+        <view class="lq-t">
+            <text class="lq-t-d1" _hover-ignore="1">领优惠券</text>
+            <text class="lq-t-d2">省<text>200</text>元</text>
+        </view>
+        <view class="lq-b"></view>
+    </a>
+    </view>
+</template>
+<script>
+  class Preferential { }
+  export default new Preferential();
+</script>
+<script cml-type="json">
+  {
+    "base": {
+      "usingComponents": {}
+    }
+  }
+</script>
+<style scoped>
+.zk-item .img-area .lq a {
+    position: absolute;
+    width: 82px;
+    height: 73px;
+    right: 0;
+    top: 0;
+    z-index: 9;
+}
+.zk-item .img-area .lq a .lq-t {
+    height: 50px;
+    background-color: #ff464e;
+}
+.lq-t-d1 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    height: 20px;
+    color: #fff;
+    padding-top: 3px;
+    text-align: center;
+    overflow: hidden;
+}
+.zk-item .img-area .lq a .lq-t .lq-t-d2 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    height: 22px;
+    color: #fff;
+    padding-top: 0;
+    text-align: center;
+    overflow: hidden;
+}
+.zk-item .img-area .lq a .lq-b {
+    height: 23px;
+    background: url(../images/gain.png) center no-repeat;
+    background-size: 82px 23px;
+}
+</style>

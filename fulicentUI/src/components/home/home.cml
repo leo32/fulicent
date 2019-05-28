@@ -1,16 +1,13 @@
 <template>
-  <view class="wrapper-classify">
-    <search></search>
+  <view class="wrapper-home">
     <view class="wrapper-content">
-      <view class="class-list" style="{{scrollerHeight}}cpx">
-        <scroller height="{{scrollerHeight}}">
+      <view class="class-list">
           <view class="class-wrapper">
             <text class="class-txt" c-for="{{categoryList}}" c-for-index="id" c-for-item="item">{{item.name}}</text>
           </view>
-        </scroller>
       </view>
 
-      <view class="main-list" style="{{scrollerHeight}}cpx">
+      <view class="main-list">
         <text class="sub-tlt"> --- 推荐区分类 --- </text>
         <view class="sub-box">
             <view class="scroll-content-list">
@@ -20,7 +17,7 @@
                 c-for-index="id"
                 c-for-item="item"
                 c-bind:tap="change"
-                data-idx="{{1}}"
+                data-idx="{{i}}"
               >
                 <view class="scroll-content-list-item-content">
                   <image src="{{item.image}}" class="scroll-content-list-item-content-img"/>
@@ -39,6 +36,82 @@
 
   </view>
 </template>
+<style scoped>
+@media cml-type (web) {
+  .wrapper-content{
+    display: flex;
+    flex-direction: row;
+  }
+  .class-list{
+    width: 150cpx;
+    border-right-color: #d9d9d9;
+    background-color: #fff;
+    border-right-style:solid;
+  }  
+  .class-wrapper {
+    display: flex;
+    flex-direction: column;
+  }  
+
+  .class-txt{
+    margin-top: 22cpx;
+    margin-bottom: 26cpx;
+    margin-left: 10cpx;
+    margin-right: 10cpx;
+    text-align: center;
+    color:#333;
+    font-size:0.15rem;
+  }  
+
+  .main-list{
+    width: 600cpx;
+    height: 1000cpx;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background-color: #fff;
+    text-align:left;
+  }  
+  .sub-tlt{
+    display:block;
+    text-align: center;
+    color:#333;
+    margin-top: 10cpx;
+    margin-bottom: 30cpx;
+    font-size:0.1rem;
+  }
+  .sub-box{
+    padding-left: 26cpx;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .scroll-content-list{
+    display:flex;
+    flex-flow: row wrap;
+    width:7.5rem;
+    flex-direction:column;
+
+  }
+  .scroll-content-list-item{
+    width:2.5rem;
+  }
+  .scroll-content-list-item-content{
+    display: flex;
+    flex-direction: row;
+  }
+  .scroll-content-list-item-content-img{
+    width: 150cpx;
+    margin-left: 14cpx;
+    margin-right: 14cpx;
+    height: 150cpx;
+  }
+  .scroll-content-list-item-name,.scroll-content-list-item-money,.scroll-content-list-item-tag{
+    font-size:0.1rem;
+  }
+}
+</style>
 <script>
   import cml from "chameleon-api";
   import {getCategoryList} from "../../api/category.js";
@@ -65,29 +138,27 @@
       getCategoryList(){
         getCategoryList().then(response=>{
           this.categoryList=response.data.categoryList;
-          console.info("getCategoryList "+this.scrollerHeight);
         });
       },
       change(e){
         console.log('事件对象:', e);
       },
       getProducts(){
-        getProducts().then(response=>{
+        getProducts({data:{sort:'CreateTime',order:'desc'}}).then(response=>{
           this.products=response.data.productList;
         })
       }
     }
 
     created() {
-      console.info("created "+this.scrollerHeight);
         this.getCategoryList();
         this.getProducts();
     }
 
     mounted() {
       cml.getSystemInfo().then((info)=>{
-        this.scrollerHeight = Number(info.viewportHeight) - headerHeight - tabbarHeight;
-        console.info("mounted "+this.scrollerHeight);
+        //this.scrollerHeight = Number(info.viewportHeight) - headerHeight - tabbarHeight;
+        //console.info("mounted "+this.scrollerHeight);
       });
 
     }
@@ -99,85 +170,8 @@
   {
     "base": {
       "usingComponents": {
-        "search": "../common/search"
+        
       }
     }
   }
 </script>
-<style scoped>
-@media cml-type (web) {
-  .class-list{
-    width: 150cpx;
-    height: 1000cpx;
-    border-right-color: #d9d9d9;
-    background-color: #fff;
-    border-right-style:solid;
-  }
-  .class-txt{
-    font-size: 28cpx;
-    margin-top: 22cpx;
-    margin-bottom: 26cpx;
-    margin-left: 10cpx;
-    margin-right: 10cpx;
-    text-align: center;
-    color:#333;
-  }
-
-  .ad-img{
-    width: 532cpx;
-    height: 194cpx;
-    border-radius: 6cpx;
-    margin: 28cpx;
-  }
-}
-  .class-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  .wrapper-content{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-
-  .main-list{
-    width: 600cpx;
-    /*height: 1000cpx;*/
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    background-color: #fff;
-  }
-
-  .sub-tlt{
-    display:block;
-    text-align: center;
-    font-size: 24cpx;
-    color:#333;
-    margin-top: 10cpx;
-    margin-bottom: 30cpx;
-  }
-  .sub-box{
-    padding-left: 26cpx;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  .sub-i{
-    display:flex;
-    flex-direction:column;
-    width: 178cpx;
-    height: 200cpx;
-  }
-  .i-img{
-    width: 150cpx;
-    margin-left: 14cpx;
-    margin-right: 14cpx;
-    height: 150cpx;
-  }
-  .i-name{
-    font-size: 22cpx;
-    text-align: center;
-  }
-</style>

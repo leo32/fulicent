@@ -3,8 +3,28 @@
 </template>
 
 <script>
+import cml from 'chameleon-api';
 import store from '../store/index.js'
 import routerConfig from '../router.config.json';
+
+
+cml.getSystemInfo().then((info) => {
+  if (info.env == 'web') {
+    var getFontSize=function(){
+        if(( document.documentElement.clientWidth) && (document.documentElement)){
+          var fontSize="";
+          var clientWidth= document.documentElement.clientWidth;
+          fontSize=clientWidth/20+"px";
+        }
+        return fontSize;
+      }
+    window.onresize = function (){
+      document.documentElement.style.fontSize=getFontSize();
+    }
+    document.documentElement.style.fontSize=getFontSize();
+  }
+})
+
 
 class App {
   data = {

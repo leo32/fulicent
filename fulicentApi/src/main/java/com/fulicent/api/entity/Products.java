@@ -18,13 +18,14 @@ public class Products implements DataInfo{
 	private String content;
 	private String image;
 	private int price;
-	private int discount;
+	private String discount;
 	private int commission;
-	private int anticipation;
+	private String anticipation;
 	private int status;
 	private int type;
+	private String expire;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
 	private Date createTime;
-	private Date expire;
+
 }

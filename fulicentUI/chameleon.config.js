@@ -27,9 +27,10 @@ cml.config.merge({
       console: false
     },
     build: {
-	  hash:false,
+	    hash:false,
       analysis: false,
       publicPath: `${publicPath}`,
+      minimize:false,
       apiPrefix
     }
   }

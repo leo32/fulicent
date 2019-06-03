@@ -18,8 +18,8 @@ public class ProductsService {
 		this.productsDao=productsDao;
 	}
 	
-	 public List<Products> Products(int limit, int skip, String sort, String order) {
-		 List<Products> Products=productsDao.Products(limit, skip, sort, order);
+	 public List<Products> Products(int limit, int skip, String sort, String order, String type) {
+		 List<Products> Products=productsDao.Products(limit, skip, sort, order, type);
 		 return Products;
 	 }
 }

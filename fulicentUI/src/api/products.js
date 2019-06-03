@@ -3,6 +3,6 @@ export function getProducts(params) {
     return cml.request({
       url: 'http://localhost:8080/products',
       method: 'get',
-      params
+      data: params
     })
   }

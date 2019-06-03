@@ -3,21 +3,23 @@
     <view class="wrapper-content">
       <view class="class-list">
           <view class="class-wrapper">
-            <text class="class-txt" c-for="{{categoryList}}" c-for-index="id" c-for-item="item">{{item.name}}</text>
+            <text class="class-txt" name="category" id="{{item.id}}" c-for="{{categoryList}}" c-for-index="id" c-for-item="item">{{item.name}}</text>
           </view>
       </view>
 
       <view class="main-list">
         <text class="sub-tlt"> --- 推荐区分类 --- </text>
         <view class="sub-box">
-            <view class="scroll-content-list">
+            <view class="scroll-content-list" >
               <view
                 class="scroll-content-list-item"
                 c-for="{{products}}"
                 c-for-index="id"
                 c-for-item="item"
                 c-bind:tap="change"
-                data-idx="{{i}}"
+                name="redirectURL" 
+                id="{{item.links}}" 
+                c-bind:click="goUrl(item)"
               >
                 <view class="scroll-content-list-item-content">
                   <image src="{{item.image}}" class="scroll-content-list-item-content-img"/>
@@ -27,7 +29,7 @@
                 </view>
                 <text class="scroll-content-list-item-name">{{item.name}}</text>
                 <text class="scroll-content-list-item-money">{{item.price}}</text>
-                <text class="scroll-content-list-item-tag">{{item.discount}}</text>
+                <text class="scroll-content-list-item-tag" >{{item.discount}}</text>
               </view>
             </view>
         </view>
@@ -90,9 +92,7 @@
   .scroll-content-list{
     display:flex;
     flex-flow: row wrap;
-    width:7.5rem;
-    flex-direction:column;
-
+    width:100%;
   }
   .scroll-content-list-item{
     width:2.5rem;
@@ -119,7 +119,7 @@
   const headerHeight = 70;
   const tabbarHeight = 90;
 
-  class Home   {
+  class Home{
     data = {
       categoryList: [],
       products: [],
@@ -135,36 +135,67 @@
       forbinding(e){
         // e.stopPropagation();
       },
-      getCategoryList(){
+      bingCategoryList(){
         getCategoryList().then(response=>{
           this.categoryList=response.data.categoryList;
+          let bind=this.bindProducts;
+          cml.getSystemInfo().then((info) => {
+          if (info.env == 'web') {
+              var ids=document.getElementsByName("category");
+              for(var i=0;i< ids.length;i++){
+                let id=ids[i]["id"];
+                document.getElementsByName("category")[i].onclick=function(){
+                  bind({sort:'CreateTime',order:'desc',categoryType:id});
+                }
+              }
+            }
+          });
         });
       },
       change(e){
         console.log('事件对象:', e);
       },
-      getProducts(){
-        getProducts({data:{sort:'CreateTime',order:'desc'}}).then(response=>{
+      bindProducts(para){
+        this.products=[];
+        getProducts(para).then(response=>{
           this.products=response.data.productList;
-        })
+          cml.getSystemInfo().then((info) => {
+          if (info.env == 'web') {
+              var urls=document.getElementsByName("redirectURL");
+              for(var i=0;i< urls.length;i++){
+                let url=urls[i]["id"];
+                document.getElementsByName("redirectURL")[i].onclick=function(){
+                  window.open(url);
+                }
+              }
+            }
+          });
+        });
+      },
+      goUrl:function(...args){
+        console.info("ccc");
+        //windows.open(url);
       }
     }
 
     created() {
-        this.getCategoryList();
-        this.getProducts();
+      let para={sort:'CreateTime',order:'desc'};
+      this.bindCategoryList();
+      this.bindProducts(para);
     }
 
     mounted() {
+      console.info("home mounted");
       cml.getSystemInfo().then((info)=>{
         //this.scrollerHeight = Number(info.viewportHeight) - headerHeight - tabbarHeight;
         //console.info("mounted "+this.scrollerHeight);
       });
-
     }
   }
 
   export default new Home();
+
+
 </script>
 <script cml-type="json">
   {

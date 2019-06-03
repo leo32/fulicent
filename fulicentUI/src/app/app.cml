@@ -7,35 +7,44 @@ import cml from 'chameleon-api';
 import store from '../store/index.js'
 import routerConfig from '../router.config.json';
 
-
-cml.getSystemInfo().then((info) => {
-  if (info.env == 'web') {
-    var getFontSize=function(){
-        if(( document.documentElement.clientWidth) && (document.documentElement)){
-          var fontSize="";
-          var clientWidth= document.documentElement.clientWidth;
-          fontSize=clientWidth/20+"px";
-        }
-        return fontSize;
-      }
-    window.onresize = function (){
-      document.documentElement.style.fontSize=getFontSize();
-    }
-    document.documentElement.style.fontSize=getFontSize();
-  }
-})
-
-
 class App {
   data = {
     store,
     routerConfig
   }
+
   created(res) {
   }
+
+  mounted() {
+    console.info("app mounted");
+    cml.getSystemInfo().then((info) => {
+      if (info.env == 'web') {
+        var getFontSize=function(){
+            var fontSize="";
+            if(( document.documentElement.clientWidth) && (document.documentElement)){
+              var clientWidth= document.documentElement.clientWidth;
+              if(clientWidth>750){
+                fontSize=clientWidth/20+"px";
+              }
+            }
+            return fontSize;
+          }
+        window.onresize = function (){
+          document.documentElement.style.fontSize=getFontSize();
+        }
+        document.documentElement.style.fontSize=getFontSize();
+      }
+    });
+
+  }
+
+
 }
 
 export default new App();
+
+
 </script>
 
 <style>

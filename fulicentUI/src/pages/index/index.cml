@@ -106,6 +106,7 @@ class Index  {
     }
 */
     mounted() {
+      console.info("index mounted");
       cml.getSystemInfo().then((info) => {
         if (info.env == 'weex') {
           this.scrollHeight = Number(info.viewportHeight) - 100 - 88;
@@ -113,12 +114,14 @@ class Index  {
           this.scrollHeight = Number(info.viewportHeight) - 88;
           console.info(this.scrollHeight);
         }
-      })
+      });
     }
 }
 
 export default new Index();
 
+
+    
 </script>
 <script cml-type="json">
   {

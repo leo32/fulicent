@@ -14,6 +14,9 @@ public interface ProductsDao {
 	            " fulicent.products t " +
 	            "WHERE " +
 	            " t.Status=1 " +
+	            "<if test='type!=\"\" and type!=null'>" +
+	            " and t.Type= ${type} " +
+	            "</if>  " +	            
 	            "<if test='sort == \"Name\"'>  " +
 	            " ORDER BY t.Name ${order} " +
 	            "</if>  " +
@@ -23,5 +26,5 @@ public interface ProductsDao {
 	            "<if test ='limit gt -1'>" +
 	            "LIMIT #{limit} OFFSET #{skip}</if>" +
 	            "</script>")
-	    List<Products> Products(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order);
+	    List<Products> Products(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order, @Param("type") String type);
 }

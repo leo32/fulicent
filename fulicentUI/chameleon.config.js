@@ -11,6 +11,7 @@ cml.config.merge({
   projectName:"index",
   console:true,
   hash:false,
+  enableGlobalCheck: true,
   buildInfo: {
     wxAppId: '123456'
   },  
@@ -31,6 +32,8 @@ cml.config.merge({
       analysis: false,
       publicPath: `${publicPath}`,
       minimize:false,
+      babelPolyfill: true,
+      console: true,
       apiPrefix
     }
   }

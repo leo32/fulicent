@@ -1,0 +1,14 @@
+<template>
+  <page title="FuliCent">
+  <view  class="fulicentPage">
+    <text>cwg</text>
+  </view>
+  </page>
+</template>
+<script cml-type="json">
+  {
+    "base": {
+      "usingComponents": {}
+    }
+  }
+</script>

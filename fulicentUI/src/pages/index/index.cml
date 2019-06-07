@@ -5,8 +5,8 @@
     <view class="chameleon-content">
       <component is="{{currentCom}}"></component>
     <view class="footer">
-      <c-tabbar c-model="{{currentCom}}"
-                tabbar="{{tabbar}}"></c-tabbar>
+      <c-tabbar id="fulicentTabbar" c-model="{{currentCom}}"
+                tabbar="{{tabbar}}" c-bind:touch='handleTabbarClick' name="tabbar"></c-tabbar>
     </view>
     </view>
     </view>
@@ -46,10 +46,12 @@ class Index  {
       selectedIndex: 0,
       tabbar: {
         tabbarStyle: "height:120cpx;",
-        textStyle: "",
+        textStyle: "cwg32",
         selectedTextStyle: "color:#61c7fc;",
         list: [
           {
+            id:'home',
+            name:'tabbar',
             compName: 'home',
             text: '首页',
             icon: chameleonIcon,
@@ -57,6 +59,8 @@ class Index  {
             "selectedIconStyle":"width:45cpx;height:45cpx;"
           },
           {
+            id:'top',
+            name:'tabbar',
             compName: 'top',
             text: '超级人气榜',
             icon: chameleonIcon,
@@ -64,6 +68,8 @@ class Index  {
             "selectedIconStyle":"width:45cpx;height:45cpx;"
           },
           {
+            id:'recommend',
+            name:'tabbar',
             compName: 'recommend',
             text: '特卖精选',
             icon: chameleonIcon,
@@ -71,6 +77,8 @@ class Index  {
             "selectedIconStyle":"width:45cpx;height:45cpx;"
           },
           {
+            id:'brand',
+            name:'tabbar',
             compName: 'brand',
             text: '品牌优惠券',
             icon: chameleonIcon,
@@ -78,6 +86,8 @@ class Index  {
             "selectedIconStyle":"width:45cpx;height:45cpx;"
           },
           {
+            id:'my',
+            name:'tabbar',
             compName: 'my',
             text: '我的足迹',
             icon: chameleonIcon,
@@ -114,6 +124,20 @@ class Index  {
           this.scrollHeight = Number(info.viewportHeight) - 88;
           console.info(this.scrollHeight);
         }
+
+        let navigator=cml.navigateTo;
+        if (info.env == 'web') {
+        var divs=document.getElementById("fulicentTabbar").getElementsByTagName('div');
+        for(var i=0;i< divs.length;i++){
+          var tabberDiv=divs[i];
+          if(tabberDiv.className.indexOf("tab-item-wrap")>-1){
+            document.getElementById("fulicentTabbar").getElementsByTagName('div')[i].onclick=function(){
+              navigator({ path:'/pages/top/top'});
+            }
+          }
+        }
+      }
+
       });
     }
 }
@@ -129,6 +153,10 @@ export default new Index();
       "usingComponents": {
         "home": "../../components/home/home",
         "c-tabbar": "cml-ui/components/c-tabbar/c-tabbar",
+        "top": "/pages/top/top",
+        "recommend": "../../components/recommend/recommend",
+        "brand": "../../components/brand/brand",
+        "my": "../../components/my/my",
         "search": "../../components/common/search"
       },
       "navigationBarTitleText": "首页",

@@ -135,7 +135,7 @@
       forbinding(e){
         // e.stopPropagation();
       },
-      bingCategoryList(){
+      bindCategoryList(){
         getCategoryList().then(response=>{
           this.categoryList=response.data.categoryList;
           let bind=this.bindProducts;

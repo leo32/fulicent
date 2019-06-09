@@ -24,6 +24,7 @@ public class ProductsController {
 		this.productsService=productsService;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponseBody> products(@RequestParam(name = "limit", defaultValue = "100") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,

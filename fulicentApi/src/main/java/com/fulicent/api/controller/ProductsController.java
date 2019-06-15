@@ -26,16 +26,33 @@ public class ProductsController {
 	
 	@CrossOrigin
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ApiResponseBody> products(@RequestParam(name = "limit", defaultValue = "100") int limit,
+	public ResponseEntity<ApiResponseBody> products(@RequestParam(name = "limit", defaultValue = "0") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,
             @RequestParam(name = "sort", required = false, defaultValue = "CreateTime") String sort,
             @RequestParam(name = "order", required = false, defaultValue = "desc") String order,
-            @RequestParam(name = "categoryType", required = false, defaultValue = "") String categoryType
+            @RequestParam(name = "categoryId", required = false, defaultValue = "") String categoryId,
+            @RequestParam(name = "type", required = false, defaultValue = "") String type,
+            @RequestParam(name = "recommend", required = false, defaultValue = "") String recommend,
+            @RequestParam(name = "brand", required = false, defaultValue = "") String brand
 			){
-		List<Products> products=productsService.Products(limit, skip, sort, order,categoryType);
+		List<Products> products=productsService.Products(limit, skip, sort, order,categoryId,type,recommend,brand);
 		return new ResponseEntity<>(ApiResponseBody.builder()
 				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
 				.data(new ProductsInfo(products))
+				.build(),
+				HttpStatus.OK
+				);
+		
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<ApiResponseBody> product(@PathVariable(name = "id") int id
+			){
+		Products product=productsService.Product(id);
+		return new ResponseEntity<>(ApiResponseBody.builder()
+				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
+				.data(product)
 				.build(),
 				HttpStatus.OK
 				);

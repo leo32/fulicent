@@ -24,6 +24,8 @@ public class Products implements DataInfo{
 	private int status;
 	private int type;
 	private String expire;
+	private String categoryId;
+	private String brand;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
 	private Date createTime;

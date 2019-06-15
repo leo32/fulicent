@@ -8,23 +8,42 @@ import java.util.List;
 @Mapper
 public interface ProductsDao {
 	 @Select("<script> "+
-	            "SELECT " +
-	            " * " +
-	            "FROM " +
-	            " fulicent.products t " +
-	            "WHERE " +
-	            " t.Status=1 " +
-	            "<if test='type!=\"\" and type!=null'>" +
-	            " and t.Type= ${type} " +
-	            "</if>  " +	            
-	            "<if test='sort == \"Name\"'>  " +
-	            " ORDER BY t.Name ${order} " +
-	            "</if>  " +
-	            "<if test='sort == \"CreateTime\"'>  " +
-	            " ORDER BY t.CreateTime  ${order} " +
-	            "</if>  " +
-	            "<if test ='limit gt -1'>" +
-	            "LIMIT #{limit} OFFSET #{skip}</if>" +
-	            "</script>")
-	    List<Products> Products(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order, @Param("type") String type);
+	    "SELECT " +
+	    "t.* " +
+	    "FROM " +
+	    " fulicent.products t " +
+	    "WHERE " +
+	    " t.Status=1 " +
+	    "<if test='categoryId!=\"\" and categoryId!=null'>" +
+	    " and t.CategoryId= ${categoryId} " +
+	    "</if>  " +	    
+	    "<if test='brand!=\"\" and brand!=null'>" +
+	    " and t.Brand= ${brand} " +
+	    "</if>  " +	    
+	    "<if test='recommend!=\"\" and recommend!=null'>" +
+	    " and t.Recommend> ${recommend} " +
+	    "</if>  " +		            
+	    "<if test='sort == \"Name\"'>  " +
+	    " ORDER BY t.Name ${order} " +
+	    "</if>  " +
+	    "<if test='sort == \"CreateTime\"'>  " +
+	    " ORDER BY t.CreateTime  ${order} " +
+	    "</if>  " +	   
+	    "<if test='sort == \"Recommend\"'>  " +
+	    " ORDER BY t.Recommend  ${order} " +
+	    "</if>  " +
+	    "<if test ='limit gt 0'>" +
+	    "LIMIT #{limit} OFFSET #{skip}</if>" +
+	    "</script>")
+	List<Products> Products(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order, @Param("categoryId") String categoryId, @Param("recommend") String recommend, @Param("brand") String brand);
+
+	 @Select("<script>SELECT A.Name,Links,Content,A.Image,Price,Discount,Commission,Anticipation,A.Id,Expire,Sale,DiscountNum,B.Name as CategoryId FROM fulicent.products A, fulicent.category B where A.CategoryId=B.Id and A.id=${id}</script>")
+	 Products Product(@Param("id") int id);
+	 
+	 @Select("<script>select t.* from fulicent.topproducts A, fulicent.products t where A.ProductId=t.Id order by A.count desc"+
+			    "<if test ='limit gt 0'>" +
+			    "LIMIT #{limit} OFFSET #{skip}</if>" +
+			    "</script>")
+	 List<Products> TopProducts(@Param("limit") int limit, @Param("skip") int skip);
+
 }

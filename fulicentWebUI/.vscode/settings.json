@@ -1,0 +1,23 @@
+{
+    "beautify.language": {
+            "js": {
+                "type": [
+                    "javascript",
+                    "json"
+                ],
+                "filename": [
+                    ".jshintrc",
+                    ".jsbeautify"
+                ]
+            },
+            "css": [
+                "css",
+                "scss"
+            ],
+            "html": [
+                "htm",
+                "html",
+                "vue"//在这里加上vue
+            ]
+        }
+}

@@ -1,14 +1,14 @@
 <template>
   <el-container>
     <el-header>
-      <fuliHeader></fuliHeader>
+      <fuliHeader  classType="my"></fuliHeader>
     </el-header>
     <el-container>
       <el-main>
         <category></category>
       </el-main>
       <el-main>
-        <productList></productList>
+        <productList  classType="my"></productList>
       </el-main>
     </el-container>
     <el-footer><fulicentFooter></fulicentFooter></el-footer>

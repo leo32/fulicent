@@ -1,14 +1,14 @@
 <template>
   <el-container>
     <el-header>
-      <fuliHeader></fuliHeader>
+      <fuliHeader classType="top"></fuliHeader>
     </el-header>
     <el-container>
       <el-main>
-        <category></category>
+        <top></top>
       </el-main>
       <el-main>
-        <productList></productList>
+        <productList classType="top"></productList>
       </el-main>
     </el-container>
     <el-footer><fulicentFooter></fulicentFooter></el-footer>
@@ -16,11 +16,12 @@
 </template>
 <script>
 import fuliHeader from "@/components/header/index";
-import category from "@/components/main/category";
+import top from "@/components/main/top";
 import productList from "@/components/main/productList";
 import fulicentFooter from "@/components/footer/footer";
+
 export default {
-  components: { fuliHeader, category, productList,fulicentFooter }
+  components: { fuliHeader, top, productList,fulicentFooter }
 };
 </script>
 <style>

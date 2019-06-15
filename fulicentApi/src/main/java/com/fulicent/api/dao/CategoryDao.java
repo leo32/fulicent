@@ -23,7 +23,7 @@ public interface CategoryDao {
 	            "<if test='sort == \"CreateTime\"'>  " +
 	            " ORDER BY t.CreateTime  ${order} " +
 	            "</if>  " +
-	            "<if test ='limit gt -1'>" +
+	            "<if test ='limit gt 0'>" +
 	            "LIMIT #{limit} OFFSET #{skip}</if>" +
 	            "</script>")
 	    List<Category> Category(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order);

@@ -5,10 +5,13 @@
     </el-header>
     <el-container>
       <el-main>
-        <category></category>
+        <top></top>
       </el-main>
       <el-main>
-        <productList></productList>
+        <detail></detail>
+      </el-main>
+     <el-main>
+        <productList  classType="guess"></productList>
       </el-main>
     </el-container>
     <el-footer><fulicentFooter></fulicentFooter></el-footer>
@@ -16,11 +19,12 @@
 </template>
 <script>
 import fuliHeader from "@/components/header/index";
-import category from "@/components/main/category";
-import productList from "@/components/main/productList";
+import top from "@/components/main/top";
+import Detail from "@/components/main/detail";
 import fulicentFooter from "@/components/footer/footer";
+import productList from "@/components/main/productList";
 export default {
-  components: { fuliHeader, category, productList,fulicentFooter }
+  components: { fuliHeader, top, Detail,productList,fulicentFooter }
 };
 </script>
 <style>

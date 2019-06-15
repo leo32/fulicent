@@ -1,14 +1,11 @@
 <template>
-  <el-row class="wrapper home-wrapper">
+  <el-row class="wrapper home-wrapper rel-zk-area">
+    <p class="head"><span>{{getTitleName(classType)}}</span></p>
     <el-row class="zk-list clearfix">
       <div class="zk-item" v-for="item in products" :key="item.id">
         <div class="img-area">
           <div class="lq">
-            <a
-              :href="item.links"
-              target="_blank"
-              rel="nofollow"
-            >
+            <a :href="item.links" target="_blank" rel="nofollow">
               <div class="lq-t">
                 <p class="lq-t-d1">领优惠券</p>
                 <p class="lq-t-d2">
@@ -28,18 +25,8 @@
               <em>50</em>秒&nbsp;结束
             </p>
           </div>
-          <a
-            :href="item.links"
-            target="_blank"
-            :title="item.name"
-          >
-            <img
-              :alt="item.name"
-              :data-original="item.image"
-              class="lazy"
-              :src="item.image"
-              style="opacity: 1;"
-            >
+          <a :href="['/detail/'+item.id]" target="_blank" :title="item.name">
+            <img :alt="item.name" :data-original="item.image" class="lazy" :src="item.image" style="opacity: 1;">
           </a>
         </div>
         <p class="title-area elli">
@@ -59,11 +46,7 @@
             </span>
           </div>
           <div class="buy-area">
-            <a
-              :href="item.links"
-              target="_blank"
-              rel="nofollow"
-            >
+            <a :href="item.links" target="_blank" rel="nofollow">
               <span class="coupon-amount">去天猫</span>
               <span class="btn-title">火速领券</span>
             </a>
@@ -78,27 +61,103 @@
   </el-row>
 </template>
 <script>
-import { getProducts } from "@/api/products";
-import datacenterBus from "@/api/datacenterBus";
-export default {
-  data() {
-    return { products: [] };
-  },
-  mounted() {
-    let params;
-    var self=this;
-    datacenterBus.$on("getValue",function(id){
-        params={sort:'CreateTime',order:'desc',categoryType:id};
-        self.bindProducts(params);
-    });
-    
-  },
-  methods: {
-    bindProducts(para) {
-      getProducts(para).then(response => {
-        this.products = response.data.productList;
-      });
+  import {
+    getProducts
+  } from "@/api/products";
+  import datacenterBus from "@/api/datacenterBus";
+  export default {
+    props: ['classType'],
+    data() {
+      return {
+        products: []
+      };
+    },
+    mounted() {
+      let params;
+      var self = this;
+      self.bindProducts(params);
+      switch (classType) {
+        case "top":
+          datacenterBus.$on("getValue", function (value) {
+            params = {
+              sort: 'CreateTime',
+              order: 'desc',
+              categoryId: value,
+              type: self.classType
+            };
+            self.bindProducts(params);
+          });
+
+          break;
+        case "recommend":
+          datacenterBus.$on("getValue", function (value) {
+            params = {
+              sort: 'CreateTime',
+              order: 'desc',
+              categoryId: "",
+              type: self.classType,
+              recommend: value
+            };
+            self.bindProducts(params);
+          });
+          break;
+        case "guess":
+          break;
+        case "brand":
+          datacenterBus.$on("getValue", function (value) {
+            params = {
+              sort: 'CreateTime',
+              order: 'desc',
+              categoryId: "",
+              type: self.classType,
+              recommend: "",
+              brand: value
+            };
+            self.bindProducts(params);
+          });
+
+          break;
+        default:
+          datacenterBus.$on("getValue", function (value) {
+            params = {
+              sort: 'CreateTime',
+              order: 'desc',
+              categoryId: value,
+              type: self.classType
+            };
+            self.bindProducts(params);
+          });
+          break;
+      }
+    },
+    methods: {
+      bindProducts(para) {
+        getProducts(para).then(response => {
+          this.products = response.data.productList;
+        });
+      },
+      getTitleName(title) {
+        var name;
+        switch (title) {
+          case "top":
+            name = "超级人气榜";
+            break;
+          case "recommend":
+            name = "特卖精选";
+            break;
+          case "brand":
+            name = "品牌优惠券";
+            break;
+          case "guess":
+            name = "猜你喜欢";
+            break;
+          default:
+            name = "精选推荐";
+            break;
+        }
+        return name;
+      }
     }
-  }
-};
+  };
+
 </script>

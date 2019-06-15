@@ -6,3 +6,10 @@ export function getProducts(params) {
       params
     })
   }
+
+  export function getProduct(id) {
+    return request({
+      url: '/products/'+id,
+      method: 'get'
+    })
+  }

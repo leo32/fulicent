@@ -26,11 +26,11 @@
       <el-col :span="24">
         <el-row class="wrapper">
           <el-col :span="4">
-            <a href="http://quan.fulibus.net" class="logo-area">
+            <a href="http://www.fulicent.com" class="logo-area">
               <img
                 class="logo"
-                alt="福利吧券"
-                src="http://quan.fulibus.net/data/uploads/site/20190520/d519c522a24c487b4bcb0f35d558be10.png"
+                alt="Fulicent"
+                src=""
               >
             </a>
           </el-col>
@@ -66,13 +66,13 @@
       <el-col class="tab-area">
         <div class="wrapper">
           <div class="cate-area">
-            <a class="cate-item jxtj active" href="http://quan.fulibus.net" _hover-ignore="1">
+            <a :class="classType?'cate-item':'cate-item jxtj active'" href="/" _hover-ignore="1">
               <span class="cate-rec">精选推荐</span>
             </a>
-            <a href="/index/jiu/index.html" class="cate-item" _hover-ignore="1">9块9包邮</a>
-            <a href="/index/ershi/index.html" class="cate-item" _hover-ignore="1">20元封顶</a>
-            <a href="/index/history/index.html" class="cate-item" _hover-ignore="1">我的足迹</a>
-            <a href="/index/live/index.html" class="cate-item" _hover-ignore="1">优惠直播</a>
+            <a :class="classType=='top'?'cate-item jxtj active':'cate-item'" href="/top/" _hover-ignore="1">超级人气榜</a>
+            <a :class="classType=='recommend'?'cate-item jxtj active':'cate-item'" href="/recommend" _hover-ignore="1">特卖精选</a>
+            <a :class="classType=='brand'?'cate-item jxtj active':'cate-item'" href="/brand"  _hover-ignore="1">品牌优惠券</a>
+            <a :class="classType=='my'?'cate-item jxtj active':'cate-item'" href="/my"  _hover-ignore="1">我的足迹</a>
           </div>
           <div
             style="line-height:40px;float:right;color:#FFF; right;margin-top:-40px;margin-right:20px;font-size:15px"
@@ -90,10 +90,10 @@
 </template>
 <script>
 export default {
-  props: ["breadData"],
   data() {
     return {};
   },
+  props:['classType'],
   methods: {},
   components: {},
   watch: {},

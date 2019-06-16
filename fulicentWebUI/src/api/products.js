@@ -13,3 +13,11 @@ export function getProducts(params) {
       method: 'get'
     })
   }
+
+  export function getAdProducts(params) {
+    return request({
+      url: '/products/ad',
+      method: 'get',
+      params
+    })
+  }

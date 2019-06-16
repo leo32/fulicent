@@ -16,8 +16,8 @@ public class BrandService {
 		this.brandDao=brandDao;
 	}
 	
-	 public List<Brand> Brand(int limit, int skip, String sort, String order) {
-		 List<Brand> brand=brandDao.Brand(limit, skip, sort, order);
+	 public List<Brand> Brand(int limit, int skip, String sort, String order,String categoryId) {
+		 List<Brand> brand=brandDao.Brand(limit, skip, sort, order,categoryId);
 		 return brand;
 	 }
 }

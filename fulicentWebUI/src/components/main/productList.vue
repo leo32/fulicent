@@ -1,7 +1,7 @@
 <template>
   <el-row class="wrapper home-wrapper rel-zk-area">
     <p class="head"><span>{{getTitleName(classType)}}</span></p>
-    <el-row class="zk-list clearfix">
+    <el-row class="zk-list clearfix"  v-loading="loading">
       <div class="zk-item" v-for="item in products" :key="item.id">
         <div class="img-area">
           <div class="lq">
@@ -69,15 +69,26 @@
     props: ['classType'],
     data() {
       return {
+        loading:false,
         products: []
       };
     },
     mounted() {
       let params;
       var self = this;
-      self.bindProducts(params);
-      switch (classType) {
+      let brandId = self.$route.query.brandId;
+      if (brandId != undefined) {
+        params = {
+          sort: 'CreateTime',
+          order: 'desc',
+          type: 'brand',
+          brand: brandId
+        };
+      }
+      
+      switch (self.classType) {
         case "top":
+          self.bindProducts({type:'top'});
           datacenterBus.$on("getValue", function (value) {
             params = {
               sort: 'CreateTime',
@@ -90,13 +101,14 @@
 
           break;
         case "recommend":
+          self.bindProducts({type:'recommend',recommend:'1'});
           datacenterBus.$on("getValue", function (value) {
             params = {
               sort: 'CreateTime',
               order: 'desc',
-              categoryId: "",
+              categoryId: value,
               type: self.classType,
-              recommend: value
+              recommend: "1"
             };
             self.bindProducts(params);
           });
@@ -104,20 +116,21 @@
         case "guess":
           break;
         case "brand":
+          self.bindProducts({type:'brand'});
           datacenterBus.$on("getValue", function (value) {
             params = {
               sort: 'CreateTime',
               order: 'desc',
-              categoryId: "",
+              categoryId: value,
               type: self.classType,
               recommend: "",
-              brand: value
+              brand: "1"
             };
             self.bindProducts(params);
           });
-
           break;
         default:
+          self.bindProducts(params);
           datacenterBus.$on("getValue", function (value) {
             params = {
               sort: 'CreateTime',
@@ -132,8 +145,11 @@
     },
     methods: {
       bindProducts(para) {
+        this.loading = true;
         getProducts(para).then(response => {
           this.products = response.data.productList;
+        }).finally(r => {
+          this.loading = false;
         });
       },
       getTitleName(title) {

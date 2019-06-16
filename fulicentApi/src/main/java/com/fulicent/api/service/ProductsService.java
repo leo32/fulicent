@@ -24,7 +24,8 @@ public class ProductsService {
 
 		 List<Products> products=null;
 		 switch(type.toLowerCase()){
-		 	case "top": products=productsDao.TopProducts(limit, skip);break;
+		 	case "top": products=productsDao.TopProducts(limit, skip,categoryId);break;
+		 	case "recommend":products=productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);break;
 		 	case "my":break;
 		 	default: products=productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);break;
 		 }
@@ -34,5 +35,10 @@ public class ProductsService {
 	 public Products Product(int id){
 		 Products product=productsDao.Product(id);
 		 return product;
+	 }
+	 
+	 public List<Products> AdProducts(int limit, int skip){
+		 List<Products> products=productsDao.AdProducts(limit, skip);
+		 return products;
 	 }
 }

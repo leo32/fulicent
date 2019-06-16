@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.fulicent.api.entity.AdProductsInfo;
 import com.fulicent.api.entity.ProductsInfo;
 import com.fulicent.api.entity.Products;
 import com.fulicent.api.service.ProductsService;
@@ -56,6 +57,18 @@ public class ProductsController {
 				.build(),
 				HttpStatus.OK
 				);
-		
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/ad", method = RequestMethod.GET)
+	public ResponseEntity<ApiResponseBody> Adproduct(@RequestParam(name = "limit", defaultValue = "10") int limit,
+            @RequestParam(name = "skip", defaultValue = "0") int skip){
+		List<Products> product=productsService.AdProducts(limit, skip);
+		return new ResponseEntity<>(ApiResponseBody.builder()
+				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
+				.data(new AdProductsInfo(product))
+				.build(),
+				HttpStatus.OK
+				);
 	}
 }

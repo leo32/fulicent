@@ -33,8 +33,9 @@ public class BrandController {
 	public ResponseEntity<ApiResponseBody> Brand(@RequestParam(name = "limit", defaultValue = "0") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,
             @RequestParam(value = "sort", required = false, defaultValue = "CategoryId") String sort,
-            @RequestParam(value = "order", required = false, defaultValue = "desc") String order){
-		List<Brand> brand=brandService.Brand(limit, skip, sort, order);
+            @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
+            @RequestParam(value = "categoryId", required = false, defaultValue = "") String categoryId){
+		List<Brand> brand=brandService.Brand(limit, skip, sort, order,categoryId);
 		return new ResponseEntity<>(ApiResponseBody.builder()
 				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
 				.data(new BrandInfo(brand))

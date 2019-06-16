@@ -20,7 +20,7 @@ import com.fulicent.common.entity.ApiResponseStatus;
 import com.fulicent.common.entity.MessageInfo;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryController {
 	private CategoryService categoryService;
 	

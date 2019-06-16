@@ -69,10 +69,10 @@
             <a :class="classType?'cate-item':'cate-item jxtj active'" href="/" _hover-ignore="1">
               <span class="cate-rec">精选推荐</span>
             </a>
-            <a :class="classType=='top'?'cate-item jxtj active':'cate-item'" href="/top/" _hover-ignore="1">超级人气榜</a>
-            <a :class="classType=='recommend'?'cate-item jxtj active':'cate-item'" href="/recommend" _hover-ignore="1">特卖精选</a>
-            <a :class="classType=='brand'?'cate-item jxtj active':'cate-item'" href="/brand"  _hover-ignore="1">品牌优惠券</a>
-            <a :class="classType=='my'?'cate-item jxtj active':'cate-item'" href="/my"  _hover-ignore="1">我的足迹</a>
+            <a :class="classType=='top'?'cate-item jxtj active':'cate-item'" href="/#/top/" _hover-ignore="1">超级人气榜</a>
+            <a :class="classType=='recommend'?'cate-item jxtj active':'cate-item'" href="/#/recommend" _hover-ignore="1">特卖精选</a>
+            <a :class="classType=='brand'?'cate-item jxtj active':'cate-item'" href="/#/brand"  _hover-ignore="1">品牌优惠券</a>
+            <a :class="classType=='my'?'cate-item jxtj active':'cate-item'" href="/#/my"  _hover-ignore="1">我的足迹</a>
           </div>
           <div
             style="line-height:40px;float:right;color:#FFF; right;margin-top:-40px;margin-right:20px;font-size:15px"

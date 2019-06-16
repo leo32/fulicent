@@ -19,7 +19,7 @@ import com.fulicent.common.entity.ApiResponseStatus;
 import com.fulicent.common.entity.MessageInfo;
 
 @RestController
-@RequestMapping("/brand")
+@RequestMapping("/api/brand")
 public class BrandController {
 	private BrandService brandService;
 	

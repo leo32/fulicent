@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 export function getProducts(params) {
     return request({
-      url: '/products',
+      url: '/api/products',
       method: 'get',
       params
     })
@@ -9,14 +9,14 @@ export function getProducts(params) {
 
   export function getProduct(id) {
     return request({
-      url: '/products/'+id,
+      url: '/api/products/'+id,
       method: 'get'
     })
   }
 
   export function getAdProducts(params) {
     return request({
-      url: '/products/ad',
+      url: '/api/products/ad',
       method: 'get',
       params
     })

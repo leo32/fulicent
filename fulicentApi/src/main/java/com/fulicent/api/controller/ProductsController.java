@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 import java.util.List;
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductsController {
 	private ProductsService productsService;
 	

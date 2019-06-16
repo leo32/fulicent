@@ -4,10 +4,11 @@ import Index from '../pages/index/index'
 import Top from '../pages/top/top'
 import Brand from '../pages/brand/brand'
 import Recommend from '../pages/recommend/recommend'
+import My from '../pages/my/my'
 import Detail from '../pages/detail/detail'
 Vue.use(Router)
 export default new Router({
-    mode: 'history',
+    //mode: 'history',
     base: process.env.BASE_URL,
     routes: [
         {
@@ -18,27 +19,31 @@ export default new Router({
             }
         },
         {
-            path: '/index',
+            path: '/',
             component: Index,
             meta: {
-                title: 'FuliCent'
+                title: '福利省钱网'
             }
         }, {
             path: '/top',
             component: Top,
-            meta: { title: 'top' }
+            meta: { title: '超级人气' }
         }, {
             path: '/brand',
             component: Brand,
-            meta: { title: 'brand' }
+            meta: { title: '品牌优惠券' }
         }, {
             path: '/recommend',
             component: Recommend,
-            meta: { title: 'recommend' }
+            meta: { title: '特卖精选' }
+        }, {
+            path: '/my',
+            component: My,
+            meta: { title: '我的足迹' }
         }, {
             path: '/detail/:id',
             component: Detail,
-            meta: { title: 'detail' }
+            meta: { title: '产品详情' }
         }]
 }
 );

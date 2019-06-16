@@ -25,7 +25,7 @@ public class ProductsController {
 		this.productsService=productsService;
 	}
 	
-	@CrossOrigin
+	//@CrossOrigin
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponseBody> products(@RequestParam(name = "limit", defaultValue = "0") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,
@@ -46,7 +46,7 @@ public class ProductsController {
 		
 	}
 	
-	@CrossOrigin
+	//@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponseBody> product(@PathVariable(name = "id") int id
 			){
@@ -59,7 +59,7 @@ public class ProductsController {
 				);
 	}
 	
-	@CrossOrigin
+	//@CrossOrigin
 	@RequestMapping(value = "/ad", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponseBody> Adproduct(@RequestParam(name = "limit", defaultValue = "10") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip){

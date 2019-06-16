@@ -25,7 +25,7 @@
               <em>50</em>秒&nbsp;结束
             </p>
           </div>
-          <a :href="['/detail/'+item.id]" target="_blank" :title="item.name">
+          <a :href="['/#/detail/'+item.id]" target="_blank" :title="item.name">
             <img :alt="item.name" :data-original="item.image" class="lazy" :src="item.image" style="opacity: 1;">
           </a>
         </div>

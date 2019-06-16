@@ -14,7 +14,7 @@
         <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-3300px, 0px, 0px);"
           v-for="item in ad1Products" :key="item.id">
           <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="3" style="width: 660px;"><a
-              target="_blank" class="swiper-slide swiper-slide-duplicate" :href="['/detail/'+item.id ]"
+              target="_blank" class="swiper-slide swiper-slide-duplicate" :href="['/#/detail/'+item.id ]"
               data-swiper-slide-index="4" style="width: 660px;">
               <img style="width: 100%;" :src="item.image">
             </a></div>
@@ -27,7 +27,7 @@
 
       </div>
       <div class="top-right-banner" v-for="item in ad2Products" :key="item.id">
-        <a :href="['/detail/'+item.id]" target="_blank" title="轮播右侧">
+        <a :href="['/#/detail/'+item.id]" target="_blank" title="轮播右侧">
           <img :src="item.image" title="轮播右侧广告">
         </a>
       </div>
@@ -35,7 +35,7 @@
     <div class="small-banner-area">
       <el-col>
         <div href="javascript:;" class="small-banner-item" v-for="item in ad3Products" :key="item.id">
-          <a target="_blank" :href="['/detail/'+item.id]">
+          <a target="_blank" :href="['/#/detail/'+item.id]">
             <img :src="item.image">
             <p class="title">{{item.name}}</p>
           </a>

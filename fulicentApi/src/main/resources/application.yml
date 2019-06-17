@@ -20,6 +20,6 @@ spring:
   profiles: prod
   datasource:
    driver-class-name: com.mysql.cj.jdbc.Driver
-   url: jdbc:mysql://172.17.0.1:3219/fulicent?autoReconnect=true&useUnicode=true&serverTimezone=GMT%2B8&characterEncoding=utf-8&allowMultiQueries=true
+   url: jdbc:mysql://172.18.77.40:3219/fulicent?autoReconnect=true&useUnicode=true&serverTimezone=GMT%2B8&characterEncoding=utf-8&allowMultiQueries=true
    username: cwg
    password: Cwgleo32  

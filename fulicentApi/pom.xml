@@ -103,7 +103,13 @@
             <artifactId>javax.inject</artifactId>
             <version>${javax.inject.version}</version>
         </dependency>
-        
+        <dependency>
+            <groupId>com.taobao.api</groupId>
+            <artifactId>top-auto-sdk</artifactId>
+            <version>1.0</version>
+             <scope>system</scope>
+             <systemPath>${project.basedir}/libs/taobao-sdk-java-auto_1457166217151-20190624.jar</systemPath>
+		</dependency>
 	</dependencies>
 
     <build>

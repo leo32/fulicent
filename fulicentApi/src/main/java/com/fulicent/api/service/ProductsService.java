@@ -20,16 +20,19 @@ public class ProductsService {
 		this.productsDao=productsDao;
 	}
 	
-	 public List<Products> Products(int limit, int skip, String sort, String order, String categoryId,String type,String recommend, String brand) {
-
-		 List<Products> products=null;
-		 switch(type.toLowerCase()){
+	 public List<Products> Products(int limit, int skip, String sort, String order, String categoryId,String type,String recommend, String brand,String ids) {
+		String[] idList={};
+		if(!ids.isEmpty()){
+			idList=ids.split(",");
+		}
+		List<Products> products=null;
+		switch(type.toLowerCase()){
 		 	case "top": products=productsDao.TopProducts(limit, skip,categoryId);break;
 		 	case "recommend":products=productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);break;
-		 	case "my":break;
+		 	case "my":products=productsDao.MyProducts( limit,  skip, idList);break;
 		 	default: products=productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);break;
-		 }
-		 return products;
+		}
+		return products;
 	 }
 	 
 	 public Products Product(int id){
@@ -39,6 +42,11 @@ public class ProductsService {
 	 
 	 public List<Products> AdProducts(int limit, int skip){
 		 List<Products> products=productsDao.AdProducts(limit, skip);
+		 return products;
+	 }
+	 
+	 public List<Products> MyProducts(int limit, int skip, String[] ids){
+		 List<Products> products=productsDao.MyProducts( limit,  skip,   ids);
 		 return products;
 	 }
 }

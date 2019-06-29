@@ -28,7 +28,7 @@ public class BrandController {
 		this.brandService=brandService;
 	}
 	
-	@CrossOrigin
+	//@CrossOrigin
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponseBody> Brand(@RequestParam(name = "limit", defaultValue = "0") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,

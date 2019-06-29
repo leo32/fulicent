@@ -1,6 +1,7 @@
 package com.fulicent.api.dao;
 
 import com.fulicent.api.entity.Products;
+
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface ProductsDao {
 	    "FROM " +
 	    " fulicent.products t " +
 	    "WHERE " +
-	    " t.Status=1 and t.Type=0 " +
+	    " t.Status=1 " +
 	    "<if test='categoryId!=\"\" and categoryId!=null'>" +
 	    " and t.CategoryId= ${categoryId} " +
 	    "</if>  " +	    
@@ -62,4 +63,22 @@ public interface ProductsDao {
 			    "LIMIT #{limit} OFFSET #{skip}</if>" +
 			    "</script>")
 	 List<Products> AdProducts(@Param("limit") int limit, @Param("skip") int skip);
+	 
+	 @Select("<script> "+
+			    "SELECT " +
+			    "t.* " +
+			    "FROM " +
+			    " fulicent.products t " +
+			    "WHERE " +
+			    " t.Status=1 " +
+			    "<if test='ids.length>0 and ids!=null'>" +
+			    " and t.Id in" + 
+			    " <foreach collection='ids' item='id' open='(' separator=',' close=')'> #{id} </foreach>"+
+			    " order by field(Id, <foreach collection='ids' item='id' separator=',' > #{id} </foreach> )"+
+			    "</if>  " +	
+			    "<if test ='limit gt 0'>" +
+			    "LIMIT #{limit} OFFSET #{skip}</if>" +
+			    "</script>")
+			List<Products> MyProducts(@Param("limit") int limit, @Param("skip") int skip, @Param("ids") String[] ids);
+
 }

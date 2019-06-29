@@ -27,16 +27,17 @@ public class ProductsController {
 	
 	//@CrossOrigin
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ApiResponseBody> products(@RequestParam(name = "limit", defaultValue = "0") int limit,
+	public ResponseEntity<ApiResponseBody> products(@RequestParam(name = "limit", defaultValue = "1000") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,
             @RequestParam(name = "sort", required = false, defaultValue = "CreateTime") String sort,
             @RequestParam(name = "order", required = false, defaultValue = "desc") String order,
             @RequestParam(name = "categoryId", required = false, defaultValue = "") String categoryId,
             @RequestParam(name = "type", required = false, defaultValue = "") String type,
             @RequestParam(name = "recommend", required = false, defaultValue = "") String recommend,
-            @RequestParam(name = "brand", required = false, defaultValue = "") String brand
+            @RequestParam(name = "brand", required = false, defaultValue = "") String brand,
+            @RequestParam(name = "ids", required = false, defaultValue = "") String ids
 			){
-		List<Products> products=productsService.Products(limit, skip, sort, order,categoryId,type,recommend,brand);
+		List<Products> products=productsService.Products(limit, skip, sort, order,categoryId,type,recommend,brand,ids);
 		return new ResponseEntity<>(ApiResponseBody.builder()
 				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
 				.data(new ProductsInfo(products))
@@ -67,6 +68,23 @@ public class ProductsController {
 		return new ResponseEntity<>(ApiResponseBody.builder()
 				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
 				.data(new AdProductsInfo(product))
+				.build(),
+				HttpStatus.OK
+				);
+	}
+	
+	@RequestMapping(value = "/my/{ids}", method = RequestMethod.GET)
+	public ResponseEntity<ApiResponseBody> MyProducts(@RequestParam(name = "limit", defaultValue = "10") int limit,
+            @RequestParam(name = "skip", defaultValue = "0") int skip,            
+            @PathVariable(name = "ids", required = false) String ids){
+		String[] idList={};
+		if(!ids.isEmpty()){
+			idList=ids.split(",");
+		}
+		List<Products> product=productsService.MyProducts(limit, skip,idList);
+		return new ResponseEntity<>(ApiResponseBody.builder()
+				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
+				.data(new ProductsInfo(product))
 				.build(),
 				HttpStatus.OK
 				);

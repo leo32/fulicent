@@ -21,3 +21,11 @@ export function getProducts(params) {
       params
     })
   }
+
+  export function getMyProducts(ids,params) {
+    return request({
+      url: '/api/products/my/'+ids,
+      method: 'get',
+      params
+    })
+  }

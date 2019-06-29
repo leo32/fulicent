@@ -21,15 +21,15 @@
           </div>
           <div class="stat" _hover-ignore="1">
             <p class="price-area">
-              <span class="ori-price">现价：¥{{product.price}}</span>
-              <span class="price"><i>券后价</i><em class="decimal">¥</em><em class="int">{{product.discount}}</em></span>
+              <span class="ori-price">现价：¥{{product.sale}}</span>
+              <span class="price"><i>券后价</i><em class="decimal">¥</em><em class="int">{{product.price}}</em></span>
             </p>
             <div class="buy-area" _hover-ignore="1">
               <p class="desc">有效期内领券下单，享受立减优惠！</p>
               <a :href="product.links" target="_blank" rel="nofollow" class="buy-btn">
                 <div class="line line-l"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
                 <div class="line line-r"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                领券立减<em>5</em>元
+                领券立减<em>{{product.discount}}</em>元
               </a>
             </div>
           </div>
@@ -56,56 +56,17 @@
       <div class="rel-zk-area" style="margin-top: 60px;">
         <p class="head">
           <span>最近浏览</span>
-          <a href="/index/history/index.html" class="more-his">查看更多
+          <a href="/#/my" class="more-his">查看更多
           </a>
         </p>
         <div class="hot-zk-list clearfix swiper-container swiper-container-horizontal">
-          <div style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);" class="swiper-wrapper">
-            <div style="width: 262px;" class="swiper-slide swiper-slide-active">
-              <a class="zk-img-item" title="家用插座转换器一转二三四多功能转换插头usb插排插板带夜灯无线"
-                href="/index/goods/index/id/589507099355.html">
-                <img style="opacity: 1;"
-                  src="https://gd3.alicdn.com/imgextra/i3/2266396741/O1CN01uAQpyo1zfQO0GneKh_!!2266396741.jpg"
-                  class="lazy"
-                  data-original="https://gd3.alicdn.com/imgextra/i3/2266396741/O1CN01uAQpyo1zfQO0GneKh_!!2266396741.jpg"
-                  alt="家用插座转换器一转二三四多功能转换插头usb插排插板带夜灯无线">
-                <p class="fixed-bottom">即将失效</p>
+          <div class="swiper-wrapper">
+            <div style="width: 262px;" class="swiper-slide swiper-slide-active" >
+              <a class="zk-img-item" v-for="item in myProducts"
+              :key="item.id" :title="item.name" :href="['/#/detail/'+item.id]"  target="_blank">
+                <img :alt="item.name" :data-original="item.image" class="lazy" :src="item.image" style="opacity: 1;">
+                <p class="fixed-bottom">{{item.name}}</p>
               </a>
-              <a class="zk-img-item" title="iphone6钢化水凝膜苹果6s抗蓝光护眼6plus原装曲面全屏覆盖苹果7水凝8p手机磨砂贴膜前膜全包边贴膜7p保护膜"
-                href="/index/goods/index/id/571900197140.html">
-                <img style="opacity: 1;" src="http://img.haodanku.com/oimg_571900197140_1558109480.jpg" class="lazy"
-                  data-original="http://img.haodanku.com/oimg_571900197140_1558109480.jpg"
-                  alt="iphone6钢化水凝膜苹果6s抗蓝光护眼6plus原装曲面全屏覆盖苹果7水凝8p手机磨砂贴膜前膜全包边贴膜7p保护膜">
-                <p class="fixed-bottom">即将失效</p>
-              </a>
-              <a class="zk-img-item" title="汽车后视镜防雨贴膜倒车镜防雨膜通用眩目全屏雾神器反光镜防水膜"
-                href="/index/goods/index/id/584734897791.html">
-                <img style="opacity: 1;"
-                  src="https://img.alicdn.com/imgextra/i2/752144829/O1CN01rgr2O11lXj8HRrRQI_!!752144829.jpg"
-                  class="lazy"
-                  data-original="https://img.alicdn.com/imgextra/i2/752144829/O1CN01rgr2O11lXj8HRrRQI_!!752144829.jpg"
-                  alt="汽车后视镜防雨贴膜倒车镜防雨膜通用眩目全屏雾神器反光镜防水膜">
-                <p class="fixed-bottom">即将失效</p>
-              </a>
-              <a class="zk-img-item" title="泰国white芦荟胶去黑头水撕拉式猪鼻贴膜祛粉刺收缩毛孔套装男女"
-                href="/index/goods/index/id/536069891909.html">
-                <img style="opacity: 1;"
-                  src="https://img.alicdn.com/imgextra/i4/1079320886/O1CN01pIi43A1IPpPiJbDyi_!!1079320886.jpg"
-                  class="lazy"
-                  data-original="https://img.alicdn.com/imgextra/i4/1079320886/O1CN01pIi43A1IPpPiJbDyi_!!1079320886.jpg"
-                  alt="泰国white芦荟胶去黑头水撕拉式猪鼻贴膜祛粉刺收缩毛孔套装男女">
-                <p class="fixed-bottom">即将失效</p>
-              </a>
-              <a class="zk-img-item" title="纯色简约抱枕靠垫汽车车内靠背办公室午睡腰靠床头腰枕客厅靠枕"
-                href="/index/goods/index/id/581664804866.html">
-                <img style="opacity: 1;"
-                  src="https://img.alicdn.com/imgextra/i3/715238540/O1CN01HfLbO32CxMtslG3xh_!!715238540.jpg"
-                  class="lazy"
-                  data-original="https://img.alicdn.com/imgextra/i3/715238540/O1CN01HfLbO32CxMtslG3xh_!!715238540.jpg"
-                  alt="纯色简约抱枕靠垫汽车车内靠背办公室午睡腰靠床头腰枕客厅靠枕">
-                <p class="fixed-bottom">即将失效</p>
-              </a>
-
             </div>
 
           </div>
@@ -116,24 +77,54 @@
 </template>
 <script>
   import {
-    getProduct
+    getProduct,
+    getMyProducts
   } from "@/api/products";
   import datacenterBus from "@/api/datacenterBus";
   export default {
     data() {
       return {
-        product: {}
+        product: {},
+        myProducts: {}
       };
     },
     mounted() {
       var self = this;
       let id = self.$route.params.id;
       self.bindProduct(id);
+      var ids = "";
+      if (localStorage.length > 0) {
+        if (localStorage.getItem('productIdList') != null) {
+          var idList = localStorage.getItem('productIdList');
+          var params = {
+            skip: '0',
+            limit: '4'
+          };
+          this.bindMyProducts(idList, params);
+          if (idList.indexOf(id + ",") > -1) {
+            idList = idList.replace(new RegExp(id+",",'g'), "");
+          }
+          ids = id + "," + idList;
+        }
+      } else {
+        ids = id + ",";
+        var params = {
+          skip: '0',
+          limit: '4'
+        };
+        this.bindMyProducts(id, params);
+      }
+      localStorage.setItem('productIdList', ids);
     },
     methods: {
       bindProduct(id) {
         getProduct(id).then(response => {
           this.product = response.data;
+        });
+      },
+      bindMyProducts(ids, params) {
+        getMyProducts(ids, params).then(response => {
+          this.myProducts = response.data.productList;
         });
       }
     }

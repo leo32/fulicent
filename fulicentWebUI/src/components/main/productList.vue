@@ -1,7 +1,7 @@
 <template>
   <el-row class="wrapper home-wrapper rel-zk-area">
     <p class="head"><span>{{getTitleName(classType)}}</span></p>
-    <el-row class="zk-list clearfix"  v-loading="loading">
+    <el-row class="zk-list clearfix" v-loading="loading">
       <div class="zk-item" v-for="item in products" :key="item.id">
         <div class="img-area">
           <div class="lq">
@@ -10,7 +10,7 @@
                 <p class="lq-t-d1">领优惠券</p>
                 <p class="lq-t-d2">
                   省
-                  <span>30</span>元
+                  <span>{{item.discount}}</span>元
                 </p>
               </div>
               <div class="lq-b"></div>
@@ -34,14 +34,14 @@
           {{item.name}}
         </p>
         <div class="raw-price-area">
-          现价：¥{{item.price}}
+          现价：¥{{item.sale}}
           <p class="sold">已领 19 张券</p>
         </div>
         <div class="info">
           <div class="price-area">
             <span class="price">
               ¥
-              <em class="number-font" style="font-size: 26px;">{{item.discount}}</em>
+              <em class="number-font" style="font-size: 26px;">{{item.price}}</em>
               <i></i>
             </span>
           </div>
@@ -69,7 +69,7 @@
     props: ['classType'],
     data() {
       return {
-        loading:false,
+        loading: false,
         products: []
       };
     },
@@ -85,10 +85,12 @@
           brand: brandId
         };
       }
-      
+
       switch (self.classType) {
         case "top":
-          self.bindProducts({type:'top'});
+          self.bindProducts({
+            type: 'top'
+          });
           datacenterBus.$on("getValue", function (value) {
             params = {
               sort: 'CreateTime',
@@ -101,7 +103,10 @@
 
           break;
         case "recommend":
-          self.bindProducts({type:'recommend',recommend:'1'});
+          self.bindProducts({
+            type: 'recommend',
+            recommend: '1'
+          });
           datacenterBus.$on("getValue", function (value) {
             params = {
               sort: 'CreateTime',
@@ -113,10 +118,26 @@
             self.bindProducts(params);
           });
           break;
+        case "my":
+          if (localStorage.length > 0) {
+            if (localStorage.getItem('productIdList') != null) {
+              var idList = localStorage.getItem('productIdList');
+              params = {
+                skip: '0',
+                limit: '1000',
+                type: 'my',
+                ids:idList
+              };
+              self.bindProducts(params);
+            }
+          }
+          break;
         case "guess":
           break;
         case "brand":
-          self.bindProducts({type:'brand'});
+          self.bindProducts({
+            type: 'brand'
+          });
           datacenterBus.$on("getValue", function (value) {
             params = {
               sort: 'CreateTime',
@@ -166,6 +187,9 @@
             break;
           case "guess":
             name = "猜你喜欢";
+            break;
+          case "my":
+            name = "我的足迹";
             break;
           default:
             name = "精选推荐";

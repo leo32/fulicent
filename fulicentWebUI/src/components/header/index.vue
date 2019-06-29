@@ -22,7 +22,7 @@
         </p>
       </el-col>
     </el-row>
-    <el-row class="header-top">
+    <el-row class="search-area">
       <el-col :span="24">
         <el-row class="wrapper">
           <el-col :span="4">
@@ -34,10 +34,10 @@
               >
             </a>
           </el-col>
-          <el-col :span="2" class="slogan-area">正品好货</el-col>
-          <el-col :span="2" class="slogan-area">人工精选</el-col>
-          <el-col :span="2" class="slogan-area">内部领券</el-col>
-          <el-col :span="2" class="slogan-area">全场包邮</el-col>
+          <el-col :span="2" class="slogan-area"><p><i class="slogan-icon cate-icon"></i>正品好货</p></el-col>
+          <el-col :span="2" class="slogan-area"><p><i class="slogan-icon cate-icon"></i>人工精选</p></el-col>
+          <el-col :span="2" class="slogan-area"><p><i class="slogan-icon cate-icon"></i>内部领券</p></el-col>
+          <el-col :span="2" class="slogan-area"><p><i class="slogan-icon cate-icon"></i>全场包邮</p></el-col>
           <el-col :span="6" class="select-area">
             <form name="soForm" action="/index/so/index.html" method="get" id="soform">
               <el-col :span="2" class="select-area selected">本站</el-col>
@@ -54,7 +54,6 @@
                   class="search-input"
                   name="wd"
                 >
-               
               </el-col>
                <a href="javascript:;" class="search-btn">搜索</a>
             </form>

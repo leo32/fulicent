@@ -5,7 +5,7 @@
     </el-header>
     <el-container>
       <el-main>
-        <category></category>
+        <top></top>
       </el-main>
       <el-main>
         <productList  classType="my"></productList>

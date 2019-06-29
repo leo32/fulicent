@@ -11,40 +11,43 @@
     </div>
     <div class="banner-top">
       <div class="banner-area swiper-container swiper-container-horizontal">
-        <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-3300px, 0px, 0px);"
-          v-for="item in ad1Products" :key="item.id">
-          <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="3" style="width: 660px;"><a
-              target="_blank" class="swiper-slide swiper-slide-duplicate" :href="['/#/detail/'+item.id ]"
-              data-swiper-slide-index="4" style="width: 660px;">
-              <img style="width: 100%;" :src="item.image">
-            </a></div>
-        </div>
-        <div class="swiper-bottom" _hover-ignore="1">
-          <div class="swiper-pager"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
-              class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
-              class="swiper-pagination-bullet"></span></div>
-        </div>
-
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="item in ad1Products" :key="item.id">
+            <div><a target="_blank" :href="['/#/detail/'+item.id ]">
+                <img :src="item.image" style="height:200px;line-height:200px;">
+              </a></div>
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
       </div>
-      <div class="top-right-banner" v-for="item in ad2Products" :key="item.id">
-        <a :href="['/#/detail/'+item.id]" target="_blank" title="轮播右侧">
-          <img :src="item.image" title="轮播右侧广告">
-        </a>
-      </div>
-    </div>
-    <div class="small-banner-area">
-      <el-col>
+      <div class="top-right-banner">
         <div href="javascript:;" class="small-banner-item" v-for="item in ad3Products" :key="item.id">
           <a target="_blank" :href="['/#/detail/'+item.id]">
             <img :src="item.image">
             <p class="title">{{item.name}}</p>
           </a>
         </div>
-      </el-col>
+      </div>
+    </div>
+    <div class="small-banner-area">
+      <swiper :options="bottomSwiperOption">
+        <swiper-slide v-for="item in ad2Products" :key="item.id">
+          <a :href="['/#/detail/'+item.id]" target="_blank">
+            <img :alt="item.name" :data-original="item.image" :src="item.image"  style="height:130px;line-height:130px;">
+          </a>
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
     </div>
   </el-row>
 </template>
 <script>
+  import {
+    swiper,
+    swiperSlide
+  } from 'vue-awesome-swiper'
+  import 'swiper/dist/css/swiper.css'
   import {
     getCategoryList
   } from "@/api/category";
@@ -61,11 +64,40 @@
         categoryList: [],
         ad1Products: [],
         ad2Products: [],
-        ad3Products: []
+        ad3Products: [],
+        swiperOption: {
+          spaceBetween: 10,
+          centeredSlides: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          }
+        },
+        bottomSwiperOption: {
+          slidesPerView: 6,
+          spaceBetween: 10,
+          slidesPerGroup: 3,
+          loop: true,
+          loopFillGroupWithBlank: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        }
       };
     },
     components: {
-      scroll
+      scroll,
+      swiper,
+      swiperSlide
     },
     created() {
       this.bindCategoryList();
@@ -145,3 +177,7 @@
   };
 
 </script>
+<style scoped>
+
+
+</style>

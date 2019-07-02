@@ -51,7 +51,14 @@ public interface ProductsDao {
 			    "LIMIT #{limit} OFFSET #{skip}</if>" +
 			    "</script>")
 	 List<Products> TopProducts(@Param("limit") int limit, @Param("skip") int skip, @Param("categoryId") String categoryId);
-
+	 
+	 @Select("<script>select count(1) from fulicent.topproducts A, fulicent.products t where t.Type=0 and t.Status=1 and A.ProductId=t.Id"+
+			    "<if test='categoryId!=\"\" and categoryId!=null'>" +
+			    " and t.CategoryId= ${categoryId} " +
+			    "</if>  " +
+			    "</script>")
+	 int CountTopProducts( @Param("categoryId") String categoryId);
+	 
 	 @Select("<script> "+
 			    "SELECT " +
 			    "t.* " +
@@ -81,4 +88,27 @@ public interface ProductsDao {
 			    "</script>")
 			List<Products> MyProducts(@Param("limit") int limit, @Param("skip") int skip, @Param("ids") String[] ids);
 
+	 @Select("<script> "+
+			    "SELECT " +
+			    "count(1) " +
+			    "FROM " +
+			    " fulicent.products t " +
+			    "WHERE " +
+			    " t.Status=1 " +
+			    "<if test='categoryId!=\"\" and categoryId!=null'>" +
+			    " and t.CategoryId= ${categoryId} " +
+			    "</if>  " +	    
+			    "<if test='brand!=\"\" and brand!=null'>" +
+			    " and t.Brand= ${brand} " +
+			    "</if>  " +	    
+			    "<if test='recommend!=\"\" and recommend!=null'>" +
+			    " and t.Recommend> ${recommend} " +
+			    "</if>  " +	
+			    "<if test='ids.length>0 and ids!=null'>" +
+			    " and t.Id in" + 
+			    " <foreach collection='ids' item='id' open='(' separator=',' close=')'> #{id} </foreach>"+
+			    " order by field(Id, <foreach collection='ids' item='id' separator=',' > #{id} </foreach> )"+
+			    "</if>  " +	
+			    "</script>")
+			int Count( @Param("categoryId") String categoryId, @Param("recommend") String recommend, @Param("brand") String brand, @Param("ids") String[] ids);
 }

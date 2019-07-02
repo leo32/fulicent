@@ -56,7 +56,7 @@
     getAdProducts
   }
   from "@/api/products";
-  import scroll from "@/components/common/scroll";
+
   export default {
     data() {
       return {
@@ -95,7 +95,6 @@
       };
     },
     components: {
-      scroll,
       swiper,
       swiperSlide
     },

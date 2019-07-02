@@ -11,6 +11,7 @@ import com.fulicent.api.service.ProductsService;
 import com.fulicent.common.entity.ApiResponseBody;
 import com.fulicent.common.entity.ApiResponseStatus;
 import com.fulicent.common.entity.MessageInfo;
+import com.fulicent.common.entity.Pagination;
 
 import javax.inject.Inject;
 
@@ -37,8 +38,10 @@ public class ProductsController {
             @RequestParam(name = "brand", required = false, defaultValue = "") String brand,
             @RequestParam(name = "ids", required = false, defaultValue = "") String ids
 			){
-		List<Products> products=productsService.Products(limit, skip, sort, order,categoryId,type,recommend,brand,ids);
+		Pagination pagination = new Pagination(skip, limit, 0);
+		List<Products> products=productsService.Products(limit, skip, sort, order,categoryId,type,recommend,brand,ids,pagination);
 		return new ResponseEntity<>(ApiResponseBody.builder()
+				.pagination(pagination)
 				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
 				.data(new ProductsInfo(products))
 				.build(),
@@ -77,12 +80,10 @@ public class ProductsController {
 	public ResponseEntity<ApiResponseBody> MyProducts(@RequestParam(name = "limit", defaultValue = "10") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip,            
             @PathVariable(name = "ids", required = false) String ids){
-		String[] idList={};
-		if(!ids.isEmpty()){
-			idList=ids.split(",");
-		}
-		List<Products> product=productsService.MyProducts(limit, skip,idList);
+		Pagination pagination = new Pagination(skip, limit, 0);
+		List<Products> product=productsService.MyProducts(limit, skip,ids,pagination);
 		return new ResponseEntity<>(ApiResponseBody.builder()
+				.pagination(pagination)
 				.status(new MessageInfo(ApiResponseStatus.RESOURCE_FOUND))
 				.data(new ProductsInfo(product))
 				.build(),

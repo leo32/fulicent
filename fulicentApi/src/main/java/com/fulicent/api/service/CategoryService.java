@@ -21,4 +21,8 @@ public class CategoryService {
 		 List<Category> category=categoryDao.Category(limit, skip, sort, order);
 		 return category;
 	 }
+	 
+	 public int SaveCategory(Category category){
+		 return categoryDao.SaveCategory(category);
+	 }
 }

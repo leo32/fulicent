@@ -20,4 +20,5 @@ public class Category  implements DataInfo{
 	private int anticipation;
 	private int status;
 	private int type;
+	private String taobaoCat;
 }

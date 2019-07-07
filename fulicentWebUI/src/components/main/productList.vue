@@ -11,7 +11,7 @@
                   <p class="lq-t-d1">领优惠券</p>
                   <p class="lq-t-d2">
                     省
-                    <span>{{item.discount}}</span>元
+                    <span>{{item.coupon}}</span>元
                   </p>
                 </div>
                 <div class="lq-b"></div>
@@ -20,10 +20,7 @@
 
             <div class="bottom-info">
               <p class="time-count" data-endtime="1560095999">
-                <i class="cate-icon" style="font-size:12px"></i> 还剩&nbsp;
-                <em>11</em>时
-                <em>23</em>分
-                <em>50</em>秒&nbsp;结束
+                <i class="cate-icon" style="font-size:12px"></i> {{dateCountDown(item.expire)}}
               </p>
             </div>
             <a :href="['/#/detail/'+item.id]" target="_blank" :title="item.name">
@@ -36,13 +33,13 @@
           </p>
           <div class="raw-price-area">
             现价：¥{{item.sale}}
-            <p class="sold">已领 19 张券</p>
+            <p class="sold">已领 {{item.couponRemainCount}} 张券</p>
           </div>
           <div class="info">
             <div class="price-area">
               <span class="price">
                 ¥
-                <em class="number-font" style="font-size: 26px;">{{item.price}}</em>
+                <em class="number-font" style="font-size: 26px;">{{item.couponPrice}}</em>
                 <i></i>
               </span>
             </div>
@@ -53,7 +50,7 @@
               </a>
             </div>
             <div class="platform-area">
-              <img src="/static/index/images/platform_tmall.png">天猫
+              <img src="/static/public/images/platform_tmall.png">天猫
             </div>
           </div>
         </li>
@@ -79,7 +76,11 @@
     data() {
       return {
         loading: false,
-        pagination: undefined,
+        pagination: {
+          "skip": 0,
+          "limit": 0,
+          "count": 0
+        },
         params: {
           sort: '',
           order: '',
@@ -102,58 +103,58 @@
         var self = this;
         let brandId = self.$route.query.brandId
         if (brandId != undefined) {
-          this.params.brand = brandId
-          this.params.type = 'brand'
+          self.params.brand = brandId
+          self.params.type = 'brand'
         }
 
         switch (self.classType) {
           case "top":
-            this.params.type = 'top'
-            self.bindProducts(this.params);
+            self.params.type = 'top'
+            self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
-              this.params.categoryId = value
-              self.bindProducts(this.params)
+              self.params.categoryId = value
+              self.bindProducts(self.params)
             });
 
             break;
           case "recommend":
-            this.params.type = 'recommend'
-            this.params.recommend = '1'
-            self.bindProducts(this.params);
+            self.params.type = 'recommend'
+            self.params.recommend = '1'
+            self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
-              this.params.categoryId = value
-              self.bindProducts(this.params)
+              self.params.categoryId = value
+              self.bindProducts(self.params)
             });
             break;
           case "my":
             if (localStorage.length > 0) {
               if (localStorage.getItem('productIdList') != null) {
                 var idList = localStorage.getItem('productIdList');
-                this.params.type = 'my'
-                this.params.ids = idList
-                self.bindProducts(this.params)
+                self.params.type = 'my'
+                self.params.ids = idList
+                self.bindProducts(self.params)
               }
             }
             break;
           case "guess":
             break;
           case "brand":
-            this.params.type = 'brand'
-            self.bindProducts(this.params);
+            self.params.type = 'brand'
+            self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
-              this.params.categoryId = value
-              this.params.brand = '1'
-              self.bindProducts(this.params)
+              self.params.categoryId = value
+              self.params.brand = '1'
+              self.bindProducts(self.params)
             });
             break;
           default:
-            self.bindProducts(this.params);
+            self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
-              this.params.sort = 'CreateTime'
-              this.params.order = 'desc'
-              this.params.categoryId = value
-              this.params.type = self.classType
-              self.bindProducts(this.params)
+              self.params.sort = 'CreateTime'
+              self.params.order = 'desc'
+              self.params.categoryId = value
+              self.params.type = self.classType
+              self.bindProducts(self.params)
             });
             break;
         }
@@ -175,6 +176,26 @@
         }).finally(r => {
           this.loading = false
         });
+      },
+      dateCountDown(endTime){
+        if(endTime==undefined) return "优惠券已失效";
+        endTime = Math.floor(new Date(endTime).getTime()/1000)*1;
+        var now = Math.floor(new Date().getTime()/1000)*1;
+        var timeStr="";
+        if(now > endTime){
+            timeStr='优惠券已失效';
+        }else{
+            var gap = endTime - now;
+            var dd = Math.floor(gap/(60*60*24));
+            var hh = Math.floor((gap-dd*60*60*24)/(60*60));
+            var mm = Math.floor((gap-dd*60*60*24-hh*60*60)/60);
+            var ss = gap-dd*60*60*24-hh*60*60-mm*60;
+            timeStr = "还剩 "+(dd>0?' '+dd+' 天':'')
+                    +(hh>0?' '+hh+' 时':'')
+                    +(mm>0?' '+mm+' 分':'')
+                    +(ss>=0?' '+ss+' 秒':'') +" 结束";
+        }
+        return timeStr;
       },
       getTitleName(title) {
         var name;

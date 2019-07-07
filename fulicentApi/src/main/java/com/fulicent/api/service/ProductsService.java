@@ -30,32 +30,32 @@ public class ProductsService {
 		List<Products> products=null;
 		switch(type.toLowerCase()){
 		 	case "top": 
-		 		products=productsDao.TopProducts(limit, skip,categoryId);
-		 		pagination.setCount(productsDao.CountTopProducts(categoryId));
+		 		products=this.productsDao.TopProducts(limit, skip,categoryId);
+		 		pagination.setCount(this.productsDao.CountTopProducts(categoryId));
 		 		break;
 		 	case "recommend":
-		 		products=productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);
-		 		pagination.setCount(productsDao.Count(categoryId, recommend, brand, idList));
+		 		products=this.productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);
+		 		pagination.setCount(this.productsDao.Count(categoryId, recommend, brand, idList));
 		 		break;
 		 	case "my":
 		 		products=productsDao.MyProducts( limit,  skip, idList);
 		 		pagination.setCount(productsDao.Count("", "", "", idList));
 		 		break;
 		 	default: 
-		 		products=productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);
-		 		pagination.setCount(productsDao.Count(categoryId, recommend, brand, idList));
+		 		products=this.productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);
+		 		pagination.setCount(this.productsDao.Count(categoryId, recommend, brand, idList));
 		 		break;
 		}
 		return products;
 	 }
 	 
 	 public Products Product(int id){
-		 Products product=productsDao.Product(id);
+		 Products product=this.productsDao.Product(id);
 		 return product;
 	 }
 	 
 	 public List<Products> AdProducts(int limit, int skip){
-		 List<Products> products=productsDao.AdProducts(limit, skip);
+		 List<Products> products=this.productsDao.AdProducts(limit, skip);
 		 return products;
 	 }
 	 
@@ -64,8 +64,16 @@ public class ProductsService {
 		if(!ids.isEmpty()){
 			idList=ids.split(",");
 		}
-		pagination.setCount(productsDao.Count("", "", "", idList));
-		List<Products> products=productsDao.MyProducts( limit,  skip,   idList);
+		pagination.setCount(this.productsDao.Count("", "", "", idList));
+		List<Products> products=this.productsDao.MyProducts( limit,  skip,   idList);
 		return products;
+	 }
+	 
+	 public int UpdateProduct(Products product){
+		 return this.productsDao.UpdateProduct(product);
+	 }
+	 
+	 public int SaveProduct(Products product){
+		 return this.productsDao.SaveProduct(product);
 	 }
 }

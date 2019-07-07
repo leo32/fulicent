@@ -12,7 +12,7 @@
         <div class="info-area">
           <h1 class="title elli">
             <span>包邮</span>{{product.name}} </h1>
-          <p class="endtime" id="eventTimeStr">优惠券即将失效:&nbsp;<em>2</em>天<em>7</em>时<em>7</em>分<em>17</em>秒</p>
+          <p class="endtime" id="eventTimeStr">{{dateCountDown(product.expire)}}</p>
           <input id="endTime" value="1560787199" type="hidden">
 
           <div class="platform" _hover-ignore="1">
@@ -22,14 +22,14 @@
           <div class="stat" _hover-ignore="1">
             <p class="price-area">
               <span class="ori-price">现价：¥{{product.sale}}</span>
-              <span class="price"><i>券后价</i><em class="decimal">¥</em><em class="int">{{product.price}}</em></span>
+              <span class="price"><i>券后价</i><em class="decimal">¥</em><em class="int">{{product.couponPrice}}</em></span>
             </p>
             <div class="buy-area" _hover-ignore="1">
               <p class="desc">有效期内领券下单，享受立减优惠！</p>
               <a :href="product.links" target="_blank" rel="nofollow" class="buy-btn">
                 <div class="line line-l"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
                 <div class="line line-r"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                领券立减<em>{{product.discount}}</em>元
+                领券立减<em>{{product.coupon}}</em>元
               </a>
             </div>
           </div>
@@ -126,6 +126,26 @@
         getMyProducts(ids, params).then(response => {
           this.myProducts = response.data.productList;
         });
+      },
+      dateCountDown(endTime){
+        if(endTime==undefined) return "优惠券已失效";
+        endTime = Math.floor(new Date(endTime).getTime()/1000)*1;
+        var now = Math.floor(new Date().getTime()/1000)*1;
+        var timeStr="";
+        if(now > endTime){
+            timeStr='优惠券已失效';
+        }else{
+            var gap = endTime - now;
+            var dd = Math.floor(gap/(60*60*24));
+            var hh = Math.floor((gap-dd*60*60*24)/(60*60));
+            var mm = Math.floor((gap-dd*60*60*24-hh*60*60)/60);
+            var ss = gap-dd*60*60*24-hh*60*60-mm*60;
+            timeStr = "还剩 "+(dd>0?' '+dd+' 天':'')
+                    +(hh>0?' '+hh+' 时':'')
+                    +(mm>0?' '+mm+' 分':'')
+                    +(ss>=0?' '+ss+' 秒':'') +" 结束";
+        }
+        return timeStr;
       }
     }
   };

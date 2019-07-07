@@ -112,7 +112,7 @@
         });
       },
       refreshProducts(id) {
-        datacenterBus.$emit("getValue", id);
+        datacenterBus.$emit("getValue", id)
       },
       bindAdProducts() {
         this.loading = true;

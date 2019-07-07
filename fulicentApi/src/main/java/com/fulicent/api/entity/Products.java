@@ -14,20 +14,23 @@ import lombok.Data;
 public class Products implements DataInfo{
 	private int id;
 	private String name;
+	private String numIID;
 	private String links;
 	private String content;
 	private String image;
-	private int price;
-	private String discount;
-	private int commission;
+	private double couponPrice;
+	private String coupon;
+	private double reservePrice;
 	private String anticipation;
 	private int status;
 	private int type;
 	private String expire;
 	private String categoryId;
 	private String brand;
-	private int discountNum;
-	private int sale;
+	private int couponRemainCount;
+	private double sale;
+	private String smallImages;
+	private int recommend;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
 	private Date createTime;

@@ -38,7 +38,7 @@ public interface ProductsDao {
 	    "</script>")
 	List<Products> Products(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order, @Param("categoryId") String categoryId, @Param("recommend") String recommend, @Param("brand") String brand);
 
-	 @Select("<script>SELECT A.Name,Links,Content,A.Image,Price,Discount,Commission,Anticipation,A.Id,Expire,Sale,DiscountNum,B.Name as CategoryId FROM fulicent.products A, fulicent.category B where A.CategoryId=B.Id and A.id=${id};"
+	 @Select("<script>SELECT A.Name,Links,Content,A.Image,CouponPrice,Coupon,ReservePrice,Anticipation,A.Id,Expire,Sale,CouponRemainCount,B.Name as CategoryId FROM fulicent.products A, fulicent.category B where A.CategoryId=B.Id and A.id=${id};"
 	 		+ "insert into fulicent.topproducts(productId,Count) value(${id},1) on duplicate key update Count=Count+1;</script>")
 	 Products Product(@Param("id") int id);
 	 
@@ -111,4 +111,75 @@ public interface ProductsDao {
 			    "</if>  " +	
 			    "</script>")
 			int Count( @Param("categoryId") String categoryId, @Param("recommend") String recommend, @Param("brand") String brand, @Param("ids") String[] ids);
+	
+	 
+	 @Update("UPDATE"+ 
+	 		" fulicent.products"+ 
+	 		" SET `Name`=#{name},"+
+	 		" `Links`=#{links},"+
+	 		" `Content`=#{content},"+
+	 		" `Image`=#{image},"+
+	 		" `CouponPrice`=#{couponPrice},"+
+	 		" `Coupon`=#{coupon},"+
+	 		" `ReservePrice`=#{reservePrice},"+
+	 		" `Anticipation`=#{anticipation},"+
+	 		" `Status`=#{status},"+
+	 		" `Type`=#{type},"+
+	 		" `CreateTime`=CURRENT_TIMESTAMP,"+
+	 		" `Expire`=#{expire},"+
+	 		" `Sale`=#{sale},"+
+	 		" `CouponRemainCount`=#{couponRemainCount},"+
+	 		" `CategoryId`=#{categoryId},"+
+	 		" `Brand`=#{brand},"+
+	 		" `Recommend`=#{recommend}"+
+	 		" WHERE " +
+	 		" `Id`=#{id}")
+	 int UpdateProduct(Products product);
+	 
+	 
+	@Insert("INSERT INTO "+
+			" fulicent.products"+
+			" ("+
+			" `Name`,"+
+			" `NumIID`,"+
+			" `Links`,"+
+			" `Content`,"+
+			" `Image`,"+
+			" `CouponPrice`,"+
+			" `Coupon`,"+
+			" `ReservePrice`,"+
+			" `Anticipation`,"+
+			" `Status`,"+
+			" `Type`,"+
+			" `CreateTime`,"+
+			" `Expire`,"+
+			" `Sale`,"+
+			" `CouponRemainCount`,"+
+			" `CategoryId`,"+
+			" `Brand`,"+
+			" `Recommend`"+
+			" ) VALUES"+
+			" ("+
+			" #{name},"+
+			" #{numIID},"+
+			" #{links},"+
+			" #{content},"+
+			" #{image},"+
+			" #{couponPrice},"+
+			" #{coupon},"+
+			" #{reservePrice},"+
+			" #{anticipation},"+
+			" #{status},"+
+			" #{type},"+
+			" CURRENT_TIMESTAMP,"+
+			" #{expire},"+
+			" #{sale},"+
+			" #{couponRemainCount},"+
+			" #{categoryId},"+
+			" #{brand},"+
+			" #{recommend}"+
+	")")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID() AS id", keyProperty = "id", before = false, resultType = int.class)
+    int SaveProduct(Products product);
+	 
 }

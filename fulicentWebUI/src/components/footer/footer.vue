@@ -28,6 +28,7 @@
         <div class="wrapper">
             <p>福利省钱  <a href="http://www.fulicent.com/" target="_blank"></a>　　Copyright @2019-2039 福利省钱 www.fulicent.com  All Rights Reserved</p>
         </div>
+        
     </div>
     </el-row>
 </template>

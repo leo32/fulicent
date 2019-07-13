@@ -33,8 +33,7 @@ public interface CategoryDao {
 	 
 		@Insert("INSERT INTO "+
 		"fulicent.category (`Name`, `Image`, `Status`, `ParentId`, `TaobaoCat`)"+
-		"Values(#{name},#{image},#{status},#{parentId},#{taobaoCat})"+
-		")")
+		"Values(#{name},#{image},#{status},#{parentId},#{taobaoCat})")
 	    @SelectKey(statement = "SELECT LAST_INSERT_ID() AS id", keyProperty = "id", before = false, resultType = int.class)
 	    int SaveCategory(Category category);
 }

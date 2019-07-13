@@ -16,6 +16,7 @@ spring:
    password: Cwgleo32
 
 ---
+
 spring:
   profiles: prod
   datasource:

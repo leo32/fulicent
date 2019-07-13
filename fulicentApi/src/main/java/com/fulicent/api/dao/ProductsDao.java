@@ -125,13 +125,14 @@ public interface ProductsDao {
 	 		" `Anticipation`=#{anticipation},"+
 	 		" `Status`=#{status},"+
 	 		" `Type`=#{type},"+
-	 		" `CreateTime`=CURRENT_TIMESTAMP,"+
 	 		" `Expire`=#{expire},"+
 	 		" `Sale`=#{sale},"+
 	 		" `CouponRemainCount`=#{couponRemainCount},"+
 	 		" `CategoryId`=#{categoryId},"+
 	 		" `Brand`=#{brand},"+
-	 		" `Recommend`=#{recommend}"+
+	 		" `SmallImages`=#{smallImages},"+
+	 		" `Recommend`=#{recommend},"+
+	 		" `LastUpdate`=CURRENT_TIMESTAMP"+
 	 		" WHERE " +
 	 		" `Id`=#{id}")
 	 int UpdateProduct(Products product);
@@ -145,6 +146,7 @@ public interface ProductsDao {
 			" `Links`,"+
 			" `Content`,"+
 			" `Image`,"+
+			" `SmallImages`,"+
 			" `CouponPrice`,"+
 			" `Coupon`,"+
 			" `ReservePrice`,"+
@@ -165,6 +167,7 @@ public interface ProductsDao {
 			" #{links},"+
 			" #{content},"+
 			" #{image},"+
+			" #{smallImages},"+
 			" #{couponPrice},"+
 			" #{coupon},"+
 			" #{reservePrice},"+

@@ -13,7 +13,7 @@
       <div class="banner-area swiper-container swiper-container-horizontal">
         <swiper :options="swiperOption">
           <swiper-slide v-for="item in ad1Products" :key="item.id">
-            <div><a target="_blank" :href="['/#/detail/'+item.id ]">
+            <div><a target="_blank" :href="'/#/detail/'+item.id">
                 <img :src="item.image" style="height:200px;line-height:200px;">
               </a></div>
           </swiper-slide>
@@ -22,7 +22,7 @@
       </div>
       <div class="top-right-banner">
         <div href="javascript:;" class="small-banner-item" v-for="item in ad3Products" :key="item.id">
-          <a target="_blank" :href="['/#/detail/'+item.id]">
+          <a target="_blank" :href="'/#/detail/'+item.id">
             <img :src="item.image">
             <p class="title">{{item.name}}</p>
           </a>
@@ -32,7 +32,7 @@
     <div class="small-banner-area">
       <swiper :options="bottomSwiperOption">
         <swiper-slide v-for="item in ad2Products" :key="item.id">
-          <a :href="['/#/detail/'+item.id]" target="_blank">
+          <a :href="'/#/detail/'+item.id" target="_blank">
             <img :alt="item.name" :data-original="item.image" :src="item.image"  style="height:130px;line-height:130px;">
           </a>
         </swiper-slide>

@@ -10,8 +10,10 @@
     "build:report": "npm_config_report=true npm run build"
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "@babel/polyfill": "^7.4.4",
+    "axios": "0.18.1",
     "element-ui": "2.9.1",
+    "es6-promise": "^4.2.8",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
@@ -26,6 +28,7 @@
     "npm": ">= 3.0.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.4.4",
     "autoprefixer": "8.5.0",
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.6",
@@ -60,7 +63,6 @@
     "sass-loader": "7.0.3",
     "script-ext-html-webpack-plugin": "2.0.1",
     "semver": "5.5.0",
-    "shelljs": "0.8.2",
     "svg-sprite-loader": "3.8.0",
     "svgo": "1.0.5",
     "uglifyjs-webpack-plugin": "1.2.7",

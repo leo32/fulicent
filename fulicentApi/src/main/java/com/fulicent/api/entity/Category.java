@@ -11,14 +11,8 @@ import com.fulicent.common.entity.DataInfo;
 public class Category  implements DataInfo{
 	private int id;
 	private String name;
-	private String links;
-	private String content;
 	private String image;
-	private int price;
-	private int discount;
-	private int commission;
-	private int anticipation;
 	private int status;
-	private int type;
+	private int parentId;
 	private String taobaoCat;
 }

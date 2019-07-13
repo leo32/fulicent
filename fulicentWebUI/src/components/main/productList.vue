@@ -23,7 +23,7 @@
                 <i class="cate-icon" style="font-size:12px"></i> {{dateCountDown(item.expire)}}
               </p>
             </div>
-            <a :href="['/#/detail/'+item.id]" target="_blank" :title="item.name">
+            <a :href="'/#/detail/'+item.id" target="_blank" :title="item.name">
               <img :alt="item.name" :data-original="item.image" class="lazy" :src="item.image" style="opacity: 1;">
             </a>
           </div>
@@ -112,6 +112,7 @@
             self.params.type = 'top'
             self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
+              self.params.skip = 0
               self.params.categoryId = value
               self.bindProducts(self.params)
             });
@@ -122,6 +123,7 @@
             self.params.recommend = '1'
             self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
+              self.params.skip = 0
               self.params.categoryId = value
               self.bindProducts(self.params)
             });
@@ -130,6 +132,7 @@
             if (localStorage.length > 0) {
               if (localStorage.getItem('productIdList') != null) {
                 var idList = localStorage.getItem('productIdList');
+                self.params.skip = 0
                 self.params.type = 'my'
                 self.params.ids = idList
                 self.bindProducts(self.params)
@@ -142,6 +145,7 @@
             self.params.type = 'brand'
             self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
+              self.params.skip = 0
               self.params.categoryId = value
               self.params.brand = '1'
               self.bindProducts(self.params)
@@ -150,6 +154,7 @@
           default:
             self.bindProducts(self.params);
             datacenterBus.$on("getValue", function (value) {
+              self.params.skip = 0
               self.params.sort = 'CreateTime'
               self.params.order = 'desc'
               self.params.categoryId = value

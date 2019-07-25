@@ -24,7 +24,7 @@
             </div>
           </li>
           <li v-for="chileItem in item.brandList" :key="chileItem.id"><a class="brandA"
-              :href="'/?brandId='+chileItem.id" target="_blank" :title="chileItem.Name">
+              :href="'/#/?brandId='+chileItem.id" target="_blank" :title="chileItem.Name">
               <div class="brandcell"><img :src="chileItem.images" :alt="chileItem.Name"
                   :title="chileItem.Name"><span>{{chileItem.name}}</span></div>
             </a>

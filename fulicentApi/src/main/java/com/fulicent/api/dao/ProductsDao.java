@@ -1,6 +1,7 @@
 package com.fulicent.api.dao;
 
 import com.fulicent.api.entity.Products;
+import com.fulicent.common.entity.LuceneDoc;
 
 import org.apache.ibatis.annotations.*;
 
@@ -19,11 +20,14 @@ public interface ProductsDao {
 	    " and t.CategoryId= ${categoryId} " +
 	    "</if>  " +	    
 	    "<if test='brand!=\"\" and brand!=null'>" +
-	    " and t.Brand= ${brand} " +
+	    " and t.Brand= '${brand}' " +
 	    "</if>  " +	    
 	    "<if test='recommend!=\"\" and recommend!=null'>" +
 	    " and t.Recommend> ${recommend} " +
-	    "</if>  " +		            
+	    "</if>  " +	
+	    "<if test='tag!=\"\" and tag!=null'>" +
+	    " and t.tag like CONCAT('%',#{tag},'%') " +
+	    "</if>  " +	 
 	    "<if test='sort == \"Name\"'>  " +
 	    " ORDER BY t.Name ${order} " +
 	    "</if>  " +
@@ -36,9 +40,9 @@ public interface ProductsDao {
 	    "<if test ='limit gt 0'>" +
 	    "LIMIT #{limit} OFFSET #{skip}</if>" +
 	    "</script>")
-	List<Products> Products(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order, @Param("categoryId") String categoryId, @Param("recommend") String recommend, @Param("brand") String brand);
+	List<Products> Products(@Param("limit") int limit, @Param("skip") int skip, @Param("sort") String sort, @Param("order") String order, @Param("categoryId") String categoryId, @Param("recommend") String recommend, @Param("brand") String brand, @Param("tag") String tag);
 
-	 @Select("<script>SELECT A.Name,Links,Content,A.Image,CouponPrice,Coupon,ReservePrice,Anticipation,A.Id,Expire,Sale,CouponRemainCount,B.Name as CategoryId FROM fulicent.products A, fulicent.category B where A.CategoryId=B.Id and A.id=${id};"
+	 @Select("<script>SELECT A.*,B.Name as CategoryId FROM fulicent.products A, fulicent.category B where A.CategoryId=B.Id and A.id=${id};"
 	 		+ "insert into fulicent.topproducts(productId,Count) value(${id},1) on duplicate key update Count=Count+1;</script>")
 	 Products Product(@Param("id") int id);
 	 
@@ -99,7 +103,7 @@ public interface ProductsDao {
 			    " and t.CategoryId= ${categoryId} " +
 			    "</if>  " +	    
 			    "<if test='brand!=\"\" and brand!=null'>" +
-			    " and t.Brand= ${brand} " +
+			    " and t.Brand= '${brand}' " +
 			    "</if>  " +	    
 			    "<if test='recommend!=\"\" and recommend!=null'>" +
 			    " and t.Recommend> ${recommend} " +
@@ -132,6 +136,7 @@ public interface ProductsDao {
 	 		" `Brand`=#{brand},"+
 	 		" `SmallImages`=#{smallImages},"+
 	 		" `Recommend`=#{recommend},"+
+	 		" `Tag`=#{tag},"+
 	 		" `LastUpdate`=CURRENT_TIMESTAMP"+
 	 		" WHERE " +
 	 		" `Id`=#{id}")
@@ -159,6 +164,7 @@ public interface ProductsDao {
 			" `CouponRemainCount`,"+
 			" `CategoryId`,"+
 			" `Brand`,"+
+			" `Tag`,"+
 			" `Recommend`"+
 			" ) VALUES"+
 			" ("+
@@ -180,9 +186,19 @@ public interface ProductsDao {
 			" #{couponRemainCount},"+
 			" #{categoryId},"+
 			" #{brand},"+
+			" #{tag},"+
 			" #{recommend}"+
 	")")
     @SelectKey(statement = "SELECT LAST_INSERT_ID() AS id", keyProperty = "id", before = false, resultType = int.class)
     int SaveProduct(Products product);
 	 
+	 @Select("<script> "+
+			    " SELECT " +
+			    " t.*" +
+			    " FROM " +
+			    " fulicent.products t " +
+			    " WHERE " +
+			    " t.Status=1 " +
+			    "</script>")
+	public List<LuceneDoc> GetLuceneDoc();
 }

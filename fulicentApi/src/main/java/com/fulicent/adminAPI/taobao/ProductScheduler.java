@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.http.impl.cookie.DateUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -42,19 +44,32 @@ public class ProductScheduler {
 
 	private CategoryService categoryService;
 	private ProductsService productsService;
+	private String url;
+	private String appKey;
+	private String sessionKey;
+	private Long zoneId;
 	
 	@Inject
-	public ProductScheduler(CategoryService categoryService,ProductsService productsService){
+	public ProductScheduler(CategoryService categoryService,ProductsService productsService,
+			@Value(value="${taobao.url}") String url,
+			@Value(value="${taobao.appKey}") String appKey,
+			@Value(value="${taobao.sessionKey}") String sessionKey,
+			@Value(value="${taobao.zoneId}") Long zoneId
+			){
 		this.categoryService=categoryService;
 		this.productsService=productsService;
+		this.url=url;
+		this.appKey=appKey;
+		this.sessionKey=sessionKey;
+		this.zoneId=zoneId;
 	}
 	
 	
 	@Scheduled(cron = "59 59 23,9 * * *")
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ApiResponseBody> SaveProducts() throws ApiException{
+	@RequestMapping(value = "create", method = RequestMethod.GET)
+	public ResponseEntity<ApiResponseBody> CreateProducts() throws ApiException{
 		try{
-			TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "", "");
+			TaobaoClient client = new DefaultTaobaoClient(url, appKey, sessionKey);
 			TbkUatmFavoritesGetRequest req = new TbkUatmFavoritesGetRequest(); req.setFields("favorites_title,favorites_id,type"); 
 			TbkUatmFavoritesGetResponse response = client.execute(req);
 			JsonNode jn=JsonUtils.jsonNodeOf(response.getBody());
@@ -71,7 +86,7 @@ public class ProductScheduler {
 				}
 			}
 			Pagination pagination = new Pagination(0, 1, 0);
-			List<Products> products=this.productsService.Products(0, 0, "CreateTime", "desc", "", "", "", "", "", pagination);
+			List<Products> products=this.productsService.Products(0, 0, "CreateTime", "desc", "", "", "", "", "","", pagination);
 			HashMap<String,Products> productHash=new HashMap<>();
 			for(Products p:products)
 			{
@@ -84,7 +99,7 @@ public class ProductScheduler {
 				if(!needHandleId.isEmpty()){
 					TbkUatmFavoritesItemGetRequest favoritesItem = new TbkUatmFavoritesItemGetRequest();
 					favoritesItem.setPlatform(1L);
-					favoritesItem.setAdzoneId();
+					favoritesItem.setAdzoneId(zoneId);
 					favoritesItem.setPageSize(100L);
 					favoritesItem.setFavoritesId(Long.valueOf(needHandleId));
 					favoritesItem.setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,click_url,nick,seller_id,volume,tk_rate,zk_final_price_wap,shop_title,event_start_time,event_end_time,type,status,category,coupon_click_url,coupon_end_time,coupon_info,coupon_start_time,coupon_total_count,coupon_remain_count");
@@ -142,6 +157,8 @@ public class ProductScheduler {
 									}					
 									if(!StringUtils.IsEmpty(item.findValue("coupon_end_time"))){
 										p.setExpire(item.findValue("coupon_end_time").asText());
+									}else{
+										p.setExpire(com.fulicent.common.utils.DateUtils.FormatDate("yyyy-MM-dd"));
 									}
 									if(!StringUtils.IsEmpty(item.findValue("small_images"))){
 										p.setSmallImages(item.findValue("small_images").toString());
@@ -180,6 +197,7 @@ public class ProductScheduler {
 											cate.setTaobaoCat(cat_name.asText());
 											p.setCategoryId(String.valueOf(categoryService.SaveCategory(cate)));
 										}
+										p.setTag(cat_name.toString().replace("\"", ""));
 									}
 									else{
 										System.out.println("cat_name:"+cat_name +" Id:"+p.getId() +" Name:"+p.getName());
@@ -197,6 +215,11 @@ public class ProductScheduler {
 									}
 									if(item.findValue("status")!=null){
 										p.setStatus(item.findValue("status").asInt());
+									}
+									if(!StringUtils.IsEmpty(item.findValue("coupon_end_time"))){
+										p.setExpire(item.findValue("coupon_end_time").asText());
+									}else{
+										p.setExpire(com.fulicent.common.utils.DateUtils.FormatDate("yyyy-MM-dd"));
 									}
 									
 									TbkItemInfoGetRequest itemInfo = new TbkItemInfoGetRequest();//need to improve
@@ -217,6 +240,7 @@ public class ProductScheduler {
 										if(id>0){
 											p.setCategoryId(String.valueOf(id));
 										}
+										p.setTag(cat_name.toString().replace("\"", ""));
 									}
 									this.productsService.UpdateProduct(p);
 								}

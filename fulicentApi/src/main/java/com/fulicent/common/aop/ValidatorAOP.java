@@ -1,12 +1,14 @@
 package com.fulicent.common.aop;
 import com.fulicent.common.exception.ApiException;
 import com.fulicent.common.utils.ControllerValidator;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.CodeSignature;
+
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -14,6 +16,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +25,10 @@ import java.util.stream.Collectors;
 
 import static com.fulicent.common.entity.ApiResponseStatus.*;
 import static com.fulicent.common.utils.Constants.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Aspect
 @Named
@@ -89,7 +96,24 @@ public class ValidatorAOP {
             //throw new ApiException(V2_RESOURCE_UPDATE_FAILED);
         }
     }
-/*
+    
+    @AfterThrowing(pointcut = "execution(public * *..*Service.add*(..))", throwing = "ex")
+    public void checkNameDuplicated(RuntimeException ex) {
+        if (ex.getClass() == DuplicateKeyException.class)
+            throw new ApiException(RESOURCE_UPDATE_FAILED);
+    }
+    /*   
+    @AfterReturning(
+            pointcut = "execution(public * com.morningstar.velo.api.search.service.elasticsearch.ElasticSearchGateway.execute(..))",
+            returning = "jestResult")
+    public void checkRelatedResource(JestResult jestResult) {
+        if (jestResult.getResponseCode() == 200) {
+            logger.info(LogBuilder.logSearchAccess());
+        } else {
+            logger.warn(LogBuilder.logSearchAccessFailure(jestResult.getErrorMessage()));
+        }
+    }
+
     @AfterThrowing(pointcut = "execution(public * *..*Service.add*(..))", throwing = "ex")
     public void checkNameDuplicated(RuntimeException ex) {
         if (ex.getClass() == DuplicateKeyException.class)

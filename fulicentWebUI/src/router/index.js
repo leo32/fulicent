@@ -6,6 +6,8 @@ import Brand from '../pages/brand/brand'
 import Recommend from '../pages/recommend/recommend'
 import My from '../pages/my/my'
 import Detail from '../pages/detail/detail'
+import Register from '../pages/user/register'
+import Login from '../pages/user/login'
 Vue.use(Router)
 export default new Router({
     //mode: 'history',
@@ -44,6 +46,14 @@ export default new Router({
             path: '/detail/:id',
             component: Detail,
             meta: { title: '产品详情' }
+        }, {
+            path: '/register',
+            component: Register,
+            meta: { title: '用户注册' }
+        }, {
+            path: '/login',
+            component: Login,
+            meta: { title: '用户登录' }
         }]
 }
 );

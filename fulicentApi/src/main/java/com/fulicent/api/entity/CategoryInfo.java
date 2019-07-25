@@ -13,9 +13,9 @@ import com.fulicent.common.entity.DataInfo;
 public class CategoryInfo implements DataInfo {
 	private List<Category> CategoryList;
 	
-	public CategoryInfo(Category Category){
+	public CategoryInfo(Category category){
 		this.CategoryList=new ArrayList<>();
-		CategoryList.add(Category);
+		CategoryList.add(category);
 	}
 }
 

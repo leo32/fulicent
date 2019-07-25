@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.fulicent.api.dao.ProductsDao;
 import com.fulicent.api.entity.Products;
+import com.fulicent.common.entity.LuceneDoc;
 import com.fulicent.common.entity.Pagination;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class ProductsService {
 		this.productsDao=productsDao;
 	}
 	
-	 public List<Products> Products(int limit, int skip, String sort, String order, String categoryId,String type,String recommend, String brand,String ids,Pagination pagination) {
+	 public List<Products> Products(int limit, int skip, String sort, String order, String categoryId,String type,String recommend, String brand,String tag,String ids,Pagination pagination) {
 		String[] idList={};
 		if(!ids.isEmpty()){
 			idList=ids.split(",");
@@ -34,7 +35,7 @@ public class ProductsService {
 		 		pagination.setCount(this.productsDao.CountTopProducts(categoryId));
 		 		break;
 		 	case "recommend":
-		 		products=this.productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);
+		 		products=this.productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand,tag);
 		 		pagination.setCount(this.productsDao.Count(categoryId, recommend, brand, idList));
 		 		break;
 		 	case "my":
@@ -42,7 +43,7 @@ public class ProductsService {
 		 		pagination.setCount(productsDao.Count("", "", "", idList));
 		 		break;
 		 	default: 
-		 		products=this.productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand);
+		 		products=this.productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand,tag);
 		 		pagination.setCount(this.productsDao.Count(categoryId, recommend, brand, idList));
 		 		break;
 		}
@@ -75,5 +76,9 @@ public class ProductsService {
 	 
 	 public int SaveProduct(Products product){
 		 return this.productsDao.SaveProduct(product);
+	 }
+	 
+	 public List<LuceneDoc> GetLuceneDoc(){
+		 return this.productsDao.GetLuceneDoc();
 	 }
 }

@@ -11,28 +11,13 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Products implements DataInfo{
+public class User  implements DataInfo{
 	private int id;
-	private String name;
-	private String numIID;
-	private String links;
-	private String content;
-	private String image;
-	private double couponPrice;
-	private String coupon;
-	private double reservePrice;
-	private String anticipation;
+	private String userName;
+	private String email;
+	private String password;
+	private String token;
 	private int status;
-	private int type;
-	private String expire;
-	private String categoryId;
-	private String brand;
-	private int couponRemainCount;
-	private double sale;
-	private String smallImages;
-	private int recommend;
-	private String tag;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
 	private Date createTime;
-
 }

@@ -36,16 +36,8 @@
 
           <div class="tags">
             <div class="tag-list">
-              <a class="tag-item" href="/index/so/index/wd/%E8%B4%B4%E8%86%9C.html">
-                贴膜 </a>
-              <a class="tag-item" href="/index/so/index/wd/%E8%93%9D%E5%85%89.html">
-                蓝光 </a>
-              <a class="tag-item" href="/index/so/index/wd/%E8%8B%B9%E6%9E%9C.html">
-                苹果 </a>
-              <a class="tag-item" href="/index/so/index/wd/%E6%9B%B2%E9%9D%A2.html">
-                曲面 </a>
-              <a class="tag-item" href="/index/so/index/wd/%E7%A3%A8%E7%A0%82.html">
-                磨砂 </a>
+              <a class="tag-item"  v-for="item in tags" :key="item.index" :href="'/#/?tags='+EncodeUrl(item)">
+                {{item}} </a>
             </div>
             <p class="coll"><i></i>按<em>Ctrl&nbsp;+&nbsp;D</em>加入收藏</p>
           </div>
@@ -80,11 +72,13 @@
     getProduct,
     getMyProducts
   } from "@/api/products";
+  import {encodeString} from "@/utils/common";
   import datacenterBus from "@/api/datacenterBus";
   export default {
     data() {
       return {
         product: {},
+        tags:[],
         myProducts: {}
       };
     },
@@ -120,6 +114,9 @@
       bindProduct(id) {
         getProduct(id).then(response => {
           this.product = response.data;
+          if(this.product.tag!=undefined){
+            this.tags=this.product.tag.split('/')
+          }
         });
       },
       bindMyProducts(ids, params) {
@@ -146,6 +143,9 @@
                     +(ss>=0?' '+ss+' 秒':'') +" 结束";
         }
         return timeStr;
+      },
+      EncodeUrl(params){
+        return encodeURIComponent(params)
       }
     }
   };

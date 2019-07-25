@@ -23,6 +23,7 @@
         <aws.sdk.version>1.11.221</aws.sdk.version>
         <springfox.swagger.version>2.4.0</springfox.swagger.version>
         <javax.version>2.3.0</javax.version>
+        <lucene.version>7.4.0</lucene.version>
     </properties>
     
 	<parent>
@@ -96,7 +97,17 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-
+		<!-- lucene -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+         <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
         <!-- Standard injection -->
         <dependency>
             <groupId>javax.inject</groupId>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fulicent.api.service.ProductsService;
 import com.fulicent.common.entity.ApiResponseBody;
@@ -31,6 +32,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.*;
+import org.apache.lucene.util.Version;
 
 import java.io.*;
 import java.nio.charset.*;
@@ -65,7 +67,8 @@ public class LuceneScheduler {
 			}
             List<LuceneDoc> luceneDocs=productsService.GetLuceneDoc();
 			FSDirectory fsDirectory = FSDirectory.open(paths);
-			Analyzer analyzer = new StandardAnalyzer();
+			//Analyzer analyzer = new StandardAnalyzer();
+			Analyzer analyzer = new IKAnalyzer();
             IndexWriterConfig indexWriterConfig  = new IndexWriterConfig(analyzer);
             indexWriter = new IndexWriter(fsDirectory, indexWriterConfig);
             indexWriter.deleteAll();

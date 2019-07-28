@@ -108,6 +108,12 @@
             <artifactId>lucene-queryparser</artifactId>
             <version>${lucene.version}</version>
         </dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.magese/ik-analyzer -->
+		<dependency>
+		    <groupId>com.github.magese</groupId>
+		    <artifactId>ik-analyzer</artifactId>
+		    <version>8.1.1</version>
+		</dependency>
         <!-- Standard injection -->
         <dependency>
             <groupId>javax.inject</groupId>

@@ -1,5 +1,6 @@
 package com.fulicent.api.controller;
 
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fulicent.api.entity.AdProductsInfo;
 import com.fulicent.api.entity.ProductsInfo;
@@ -127,7 +129,7 @@ public class ProductsController {
 			directoryReader = DirectoryReader.open(FSDirectory.open(Paths.get(indexPath)));
 			IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
 			String[] fields = {"name", "tag"};
-			Analyzer analyzer = new StandardAnalyzer();
+			Analyzer analyzer = new IKAnalyzer();
 			MultiFieldQueryParser queryParser = new MultiFieldQueryParser(fields, analyzer);
 			Query query = queryParser.parse(keyword);
 			Sort sort = new Sort(new SortField("sortid", Type.LONG, true));

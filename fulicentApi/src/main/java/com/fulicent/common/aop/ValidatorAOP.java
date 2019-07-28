@@ -97,10 +97,10 @@ public class ValidatorAOP {
         }
     }
     
-    @AfterThrowing(pointcut = "execution(public * *..*Service.add*(..))", throwing = "ex")
-    public void checkNameDuplicated(RuntimeException ex) {
+    @AfterThrowing(pointcut = "execution(public * *..*Service.Save*(..))", throwing = "ex")
+    public void checkEmailDuplicated(RuntimeException ex) {
         if (ex.getClass() == DuplicateKeyException.class)
-            throw new ApiException(RESOURCE_UPDATE_FAILED);
+            throw new ApiException(EMAIL_CANNOT_DUPLICATE);
     }
     /*   
     @AfterReturning(

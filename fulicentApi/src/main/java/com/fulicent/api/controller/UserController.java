@@ -57,7 +57,7 @@ public class UserController {
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public ResponseEntity<ApiResponseBody> SaveUser(@RequestBody String body){
 		User user=JsonUtils.fromJsonString(body, User.class);
-		user.setStatus(1);
+		user.setStatus(2);
 		int result=userService.Save(user);
 	   return new ResponseEntity<>(
 			   ApiResponseBody.builder()

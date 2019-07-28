@@ -21,8 +21,7 @@
     <el-row class="header-top">
       <div class="wrapper">
         <a href="http://fulicent.com" class="logo-area">
-          <img class="logo" alt="福利省钱网"
-            src=" ">
+          <img class="logo" alt="福利省钱网" src=" ">
         </a>
         <div class="slogan-area">
           <i class="slogan-icon cate-icon"></i>
@@ -45,8 +44,8 @@
               <i>
               </i>
 
-              <el-input type="text" v-model="keyword" title="输入关键词或淘宝链接" placeholder="输入关键词"  @keyup.enter.native="searchEnterFun"  value=""
-                ></el-input>
+              <el-input type="text" v-model="keyword" title="输入关键词或淘宝链接" placeholder="输入关键词"
+                @keyup.enter.native="searchEnterFun" value=""></el-input>
 
             </div>
             <a :href="'/#/?keyword='+EncodeUrl()" class="search-btn" target="_blank">搜索</a>
@@ -69,10 +68,12 @@
               _hover-ignore="1">品牌优惠券</a>
             <a :class="classType=='my'?'cate-item jxtj active':'cate-item'" href="/#/my" _hover-ignore="1">我的足迹</a>
           </div>
-          <div style="line-height:40px;float:right;color:#FFF; right;margin-top:-40px;margin-right:20px;font-size:15px"
-            ref="userInfo">
-            <a style="line-height:40px;color:#FFF;margin-right:10px;" href="/#/register">注册</a>
-            <a style="line-height:40px;color:#FFF;" href="/#/login">登录</a>
+          <div style="line-height:40px;float:right;color:#FFF; right;margin-top:-40px;margin-right:20px;font-size:15px">
+            <span ref="userInfo"> 
+              <a style="line-height:40px;color:#FFF;margin-right:10px;" href="/#/register">注册</a>
+              <a style="line-height:40px;color:#FFF;" href="/#/login">登录</a>
+            </span>
+            <a ref="logout" style="line-height:40px;color:#FFF;display:none;" href="javascript:void(0)" @click="logout">退出</a>
           </div>
         </div>
       </el-col>
@@ -81,32 +82,38 @@
 </template>
 <script>
   import {
-    getToken
+    getToken,
+    removeToken
   } from "@/utils/cookies"
   export default {
     data() {
       return {
-        keyword:''
+        keyword: ''
       }
     },
     props: ['classType'],
     components: {},
     watch: {
- 
+
     },
     computed: {},
     methods: {
-           searchEnterFun(){
-                 window.open('/#/?keyword='+this.EncodeUrl());
-            },
-      EncodeUrl(){
+      searchEnterFun() {
+        window.open('/#/?keyword=' + this.EncodeUrl());
+      },
+      EncodeUrl() {
         return encodeURIComponent(this.keyword)
       },
       loadUserData() {
         var userInfo = getToken();
         if (userInfo != undefined) {
           this.$refs.userInfo.innerHTML = "欢迎 " + userInfo
+          this.$refs.logout.style = 'line-height:40px;color:#FFF;';
         }
+      },
+      logout() {
+        removeToken()
+        window.location.reload()
       }
     },
     mounted() {

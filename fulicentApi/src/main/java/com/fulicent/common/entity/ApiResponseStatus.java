@@ -9,6 +9,8 @@ public enum ApiResponseStatus {
     RELATED_RESOURCE_FOUND("400401", "Related resource exist need to be cleaned first"),
     RESOURCE_DELETE_FAILED("400402", "%s delete failed"), RESOURCE_CREATE_FAILED("400403", "%s create failed"),
     RESOURCE_UPDATE_FAILED("400404", "%s update failed"), RESOURCE_FOUND("200201", "%s found"),
+    EMAIL_CANNOT_DUPLICATE("400405", "邮箱已被注册，请换一个试试！"),
+    EMAILORPASSWORD_CANNOT_MATCH("400406", "该邮箱还没有激活，或邮箱密码错误！"),
     RESOURCE_DELETE_SUCCESS("200202", "%s delete successfully"),
     RESOURCE_CREATE_SUCCESS("200203", "%s create successfully"),
     RESOURCE_UPDATE_SUCCESS("200204", "%s update successfully");

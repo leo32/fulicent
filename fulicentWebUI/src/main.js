@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store/index'
 import promise from 'es6-promise'
+
 Vue.use(ElementUI)
 promise.polyfill()
 new Vue({

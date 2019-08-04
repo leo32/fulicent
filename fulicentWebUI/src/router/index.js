@@ -10,7 +10,7 @@ import Register from '../pages/user/register'
 import Login from '../pages/user/login'
 Vue.use(Router)
 export default new Router({
-    //mode: 'history',
+    mode: 'history',
     base: process.env.BASE_URL,
     routes: [
         {

@@ -55,7 +55,7 @@
           <div class="swiper-wrapper">
             <div style="width: 262px;" class="swiper-slide swiper-slide-active" >
               <a class="zk-img-item" v-for="item in myProducts"
-              :key="item.id" :title="item.name" :href="'/#/detail/'+item.id"  target="_blank">
+              :key="item.id" :title="item.name" :href="'/detail/'+item.id"  target="_blank">
                 <img :alt="item.name" :data-original="item.image" class="lazy" :src="item.image" style="opacity: 1;">
                 <p class="fixed-bottom">{{item.name}}</p>
               </a>
@@ -75,11 +75,18 @@
   import {encodeString} from "@/utils/common";
   import datacenterBus from "@/api/datacenterBus";
   export default {
+    name: 'async',
+    metaInfo () {
+      return {
+        title: this.pageName
+      }
+    },
     data() {
       return {
         product: {},
         tags:[],
-        myProducts: {}
+        myProducts: {},
+        pageName: ''
       };
     },
     mounted() {
@@ -116,6 +123,9 @@
           this.product = response.data;
           if(this.product.tag!=undefined){
             this.tags=this.product.tag.split('/')
+          }
+          if(this.product.name!=undefined){
+            this.pageName =this.product.name
           }
         });
       },

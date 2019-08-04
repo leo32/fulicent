@@ -11,6 +11,8 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
+const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -55,7 +57,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true,
       favicon: resolve('favicon.ico'),
-      title: 'velo-admin-site',
+      title: 'fulicent',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -97,7 +99,21 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new PrerenderSPAPlugin({
+      // 生成文件的路径，也可以与webpakc打包的一致。
+      // 下面这句话非常重要！！！
+      // 这个目录只能有一级，如果目录层次大于一级，在生成的时候不会有任何错误提示，在预渲染的时候只会卡着不动。
+      staticDir: path.join(__dirname, '../dist'),
+      
+      // 对应自己的路由文件，比如index有参数，就需要写成 /index/param1。
+      routes: ['/', '/top','/login','/register','/brand','/index','/detail','/my','/recommend','/search'],
+      
+      // 这个很重要，如果没有配置这段，也不会进行预编译
+      renderer: new PrerenderSPAPlugin.PuppeteerRenderer({//这样写renderAfterTime生效了
+        renderAfterTime: 5000
+      })
+    })
   ],
   optimization: {
     splitChunks: {

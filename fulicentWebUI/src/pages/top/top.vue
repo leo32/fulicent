@@ -21,6 +21,17 @@ import productList from "@/components/main/productList";
 import fulicentFooter from "@/components/footer/footer";
 
 export default {
+      metaInfo: {
+      title: '福利省钱网,优惠券领取,超级人气榜',
+      meta: [{
+        name: '优惠券领取',
+        content: '福利省钱网,超级人气榜'
+      }],
+      link: [{
+        rel: 'asstes',
+        href: 'http://fulicent.com/top'
+      }]
+    },
   components: { fuliHeader, top, productList,fulicentFooter }
 };
 </script>

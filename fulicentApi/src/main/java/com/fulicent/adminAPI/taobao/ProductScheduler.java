@@ -90,7 +90,9 @@ public class ProductScheduler {
 			HashMap<String,Products> productHash=new HashMap<>();
 			for(Products p:products)
 			{
-				productHash.put(p.getNumIID(), p);
+				if(p.getNumIID()!=""&&p.getNumIID()!="0"){
+					productHash.put(p.getNumIID(), p);
+				}
 			}
 			
 			for(int j=0;j<favoritesIds.size();j++){

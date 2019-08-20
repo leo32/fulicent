@@ -14,7 +14,7 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="item in ad1Products" :key="item.id">
             <div><a target="_blank" :href="'/detail/'+item.id">
-                <img :src="item.image" style="height:200px;line-height:200px;">
+                <img :src="item.image" style="height:200px;line-height:200px; width:660px;">
               </a></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>

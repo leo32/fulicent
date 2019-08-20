@@ -5,9 +5,6 @@
     </el-header>
     <el-container>
       <el-main>
-        <top></top>
-      </el-main>
-      <el-main>
         <detail></detail>
       </el-main>
      <el-main>

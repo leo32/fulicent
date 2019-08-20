@@ -3,6 +3,7 @@
     <p class="head"><span>{{getTitleName(classType)}}</span></p>
     <el-row v-loading="loading">
       <ul class="zk-list clearfix">
+        <p  ref="data"></p>
         <li class="zk-item" v-for="item in items" :key="item.id">
           <div class="img-area">
             <div class="lq">
@@ -59,15 +60,16 @@
     <div class="page">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
         :current-page.sync="params.page" :page-sizes="[12,20,40,80,pagination && pagination.count]"
-        :page-size="params.limit" layout="total, prev, pager, next, jumper"
-        :total="pagination && pagination.count || 0" v-if="pagination.count>12?true:false">
+        :page-size="params.limit" layout="total, prev, pager, next, jumper" :total="pagination && pagination.count || 0"
+        v-if="pagination.count>12?true:false">
       </el-pagination>
     </div>
   </el-row>
 </template>
 <script>
   import {
-    getProducts,searchProducts
+    getProducts,
+    searchProducts
   } from "@/api/products";
   import datacenterBus from "@/api/datacenterBus";
 
@@ -81,8 +83,9 @@
           "limit": 0,
           "count": 0
         },
+        class: '',
         params: {
-          keyword:'',
+          keyword: '',
           tags: '',
           sort: '',
           order: '',
@@ -105,7 +108,8 @@
         var self = this;
         let brandId = ""
         let tags = ""
-        let keyword=""
+        let keyword = ""
+        self.class = self.classType
         if (self.$route.query != undefined && self.$route.query != null) {
           brandId = self.$route.query.brandId
           tags = self.$route.query.tags
@@ -119,10 +123,10 @@
           }
           if (keyword != undefined) {
             self.params.keyword = keyword
-            self.classType="search"
-          }          
+            self.class = "search"
+          }
         }
-        switch (self.classType) {
+        switch (self.class) {
           case "top":
             self.params.type = 'top'
             self.bindProducts(self.params);
@@ -182,7 +186,7 @@
               self.params.sort = 'CreateTime'
               self.params.order = 'desc'
               self.params.categoryId = value
-              self.params.type = self.classType
+              self.params.type = self.class
               self.bindProducts(self.params)
             });
             break;
@@ -202,15 +206,27 @@
         getProducts(para).then(response => {
           this.items = response.data.productList
           this.pagination = response.pagination
+          if (this.items.length == 0) {
+            this.$refs['data'].style ='display:';
+            this.$refs['data'].innerHTML = "<h1>数据没有找到，请尝试其它关键字！！</h1>"
+          }else{
+            this.$refs['data'].style ='display:none';
+          }
         }).finally(r => {
           this.loading = false
         });
       },
-      bindSearchProducts(para){
+      bindSearchProducts(para) {
         this.loading = true
         searchProducts(para).then(response => {
           this.items = response.data.productList
           this.pagination = response.pagination
+          if (this.items.length == 0) {
+            this.$refs['data'].style ='display:';
+            this.$refs['data'].innerHTML = "<h1>数据没有找到，请尝试其它关键字！！</h1>"
+          }else{
+            this.$refs['data'].style ='display:none';
+          }
         }).finally(r => {
           this.loading = false
         });
@@ -248,7 +264,7 @@
             name = "品牌优惠券";
             break;
           case "search":
-            name = "搜索结果";  
+            name = "搜索结果";
           case "guess":
             name = "猜你喜欢";
             break;

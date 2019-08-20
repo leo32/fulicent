@@ -64,14 +64,16 @@ public interface ProductsDao {
 	 int CountTopProducts( @Param("categoryId") String categoryId);
 	 
 	 @Select("<script> "+
-			    "SELECT " +
-			    "t.* " +
-			    "FROM " +
+			    " SELECT " +
+			    " t.* " +
+			    " FROM " +
 			    " fulicent.products t " +
-			    "WHERE " +
-			    "t.Type in(1,2,3)"+ 
+			    " WHERE " +
+			    " t.Type in(1,2,3)"+ 
+			    " And t.Status=1 " +
+			    " order by Id desc"+
 			    "<if test ='limit gt 0'>" +
-			    "LIMIT #{limit} OFFSET #{skip}</if>" +
+			    " LIMIT #{limit} OFFSET #{skip}</if>" +
 			    "</script>")
 	 List<Products> AdProducts(@Param("limit") int limit, @Param("skip") int skip);
 	 

@@ -89,7 +89,7 @@ public class ProductsController {
 	
 	//@CrossOrigin
 	@RequestMapping(value = "/ad", method = RequestMethod.GET)
-	public ResponseEntity<ApiResponseBody> Adproduct(@RequestParam(name = "limit", defaultValue = "10") int limit,
+	public ResponseEntity<ApiResponseBody> Adproduct(@RequestParam(name = "limit", defaultValue = "1000") int limit,
             @RequestParam(name = "skip", defaultValue = "0") int skip){
 		List<Products> product=productsService.AdProducts(limit, skip);
 		return new ResponseEntity<>(ApiResponseBody.builder()

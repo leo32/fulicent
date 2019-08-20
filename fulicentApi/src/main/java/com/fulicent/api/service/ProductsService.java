@@ -35,7 +35,7 @@ public class ProductsService {
 		 		pagination.setCount(this.productsDao.CountTopProducts(categoryId));
 		 		break;
 		 	case "recommend":
-		 		products=this.productsDao.Products(limit, skip, sort, order, categoryId,recommend,brand,tag);
+		 		products=this.productsDao.Products(limit, skip, "Recommend", "desc", categoryId,recommend,brand,tag);
 		 		pagination.setCount(this.productsDao.Count(categoryId, recommend, brand, idList));
 		 		break;
 		 	case "my":

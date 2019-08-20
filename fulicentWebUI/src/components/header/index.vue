@@ -48,7 +48,7 @@
                 @keyup.enter.native="searchEnterFun" value=""></el-input>
 
             </div>
-            <a :href="'/?keyword='+EncodeUrl()" class="search-btn" target="_blank">搜索</a>
+            <a  @click="searchEnterFun()" href="javascript:void(0);" class="search-btn" target="_blank">搜索</a>
           </el-form>
         </div>
         <div id="suggest" class="suggest"></div>
@@ -93,13 +93,18 @@
     },
     props: ['classType'],
     components: {},
-    watch: {
-
+    created() {
+      var self = this;
+      if (self.$route.query != undefined && self.$route.query != null) {
+        self.keyword = self.$route.query.keyword
+      }
     },
     computed: {},
     methods: {
       searchEnterFun() {
-        window.open('/?keyword=' + this.EncodeUrl());
+        if(this.keyword!=undefined&&this.keyword!=''){
+          window.open('/?keyword=' + this.EncodeUrl());
+        }
       },
       EncodeUrl() {
         return encodeURIComponent(this.keyword)

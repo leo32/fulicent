@@ -13,7 +13,6 @@ public class AdProductsInfo implements DataInfo {
 	private List<Products> ad3ProductList =new ArrayList<>();
 	
 	public AdProductsInfo(List<Products> products){
-		int j=-1;
 		for(int i=0;i<products.size();i++){
 			if(products.get(i).getType()==1){
 				ad1ProductList.add(products.get(i));

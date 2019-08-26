@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="wrapper-r">
+    <div class="wrapper-r" id="recentProducts">
       <div class="rel-zk-area" style="margin-top: 60px;">
         <p class="head">
           <span>最近浏览</span>
